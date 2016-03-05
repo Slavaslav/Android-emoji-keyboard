@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="chat_background_color">#eeeeee</color>
+    <color name="separator_start_color">#32000000</color>
+    <color name="separator_end_color">#00000000</color>
+    <color name="chat_bubble_stroke">#E5E5E5</color>
+    <color name="attachment_icon_unknown">#4DAAAAAA</color>
+</resources>
