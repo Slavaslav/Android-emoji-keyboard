@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class EmojiView extends FrameLayout {
 
-    ArrayList<GridView> views = new ArrayList<>();
+    private final ArrayList<GridView> views = new ArrayList<>();
 
     public EmojiView(Context context) {
         super(context);
@@ -58,7 +58,7 @@ public class EmojiView extends FrameLayout {
 
     private class EmojiGridAdapter extends BaseAdapter {
 
-        private int emojiPage;
+        private final int emojiPage;
 
         public EmojiGridAdapter(int page) {
             emojiPage = page;

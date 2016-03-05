@@ -1,6 +1,6 @@
 package com.slava.emojicfc;
 
-public class EmojiData {
+class EmojiData {
     public static final String[][] dataColored = {
             new String[]{
                     "😀", "😬", "😁", "😂", "😃", "😄", "😅", "😆", "😇", "😉", "😊",

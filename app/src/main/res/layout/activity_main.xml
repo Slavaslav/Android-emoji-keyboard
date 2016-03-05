@@ -84,10 +84,11 @@
             android:textSize="24sp" />
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/frame_emoji_view"
+    <LinearLayout
+        android:id="@+id/linear_emoji_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:visibility="gone">
 
         <LinearLayout
@@ -102,11 +103,78 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <FrameLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="tabStripContainer" />
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_access_time" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/emoji_button" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_filter_vintage" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_notifications" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_drive_eta" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_keyboard_control" />
+                </FrameLayout>
+
 
             </LinearLayout>
 
@@ -118,8 +186,8 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/ic_smile_backspace"
-                    android:scaleType="center" />
+                    android:scaleType="center"
+                    android:src="@drawable/ic_smile_backspace" />
 
                 <View
                     android:layout_width="match_parent"
@@ -128,6 +196,12 @@
                     android:background="@color/attachment_icon_unknown" />
             </FrameLayout>
         </LinearLayout>
-    </FrameLayout>
 
+        <FrameLayout
+            android:id="@+id/emoji_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="220dp">
+
+        </FrameLayout>
+    </LinearLayout>
 </LinearLayout>

@@ -3,19 +3,20 @@ package com.slava.emojicfc;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText messageEdit;
-    EmojiView emojiView;
-    ImageView emoji_btn;
-    FrameLayout frame_emoji_view;
     public static volatile Context applicationContext;
+    private EditText messageEdit;
+    private EmojiView emojiView;
+    private ImageView emoji_btn;
+    private LinearLayout linear_emoji_view;
+    private EmojiGridPageFragment emojiFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
         applicationContext = getApplicationContext();
 
         emoji_btn = (ImageView) findViewById(R.id.emoji_btn);
-        frame_emoji_view = (FrameLayout) findViewById(R.id.frame_emoji_view);
+        linear_emoji_view = (LinearLayout) findViewById(R.id.linear_emoji_view);
+
         FrameLayout frame_emoji_btn = (FrameLayout) findViewById(R.id.frame_emoji_btn);
         frame_emoji_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,27 +50,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        emojiFragment = new EmojiGridPageFragment();
 
     }
 
     private void createEmojiView(View v) {
-
-        if (frame_emoji_view.getVisibility() == View.VISIBLE) {
-
+        if (linear_emoji_view.getVisibility() == View.VISIBLE) {
+            getSupportFragmentManager().beginTransaction().remove(emojiFragment).commit();
+            linear_emoji_view.setVisibility(View.GONE);
             emoji_btn.setBackgroundResource(R.drawable.emoji_button);
-            frame_emoji_view.setVisibility(View.GONE);
-            messageEdit.requestFocus();
             AndroidUtilities.showKeyboard(messageEdit);
+            messageEdit.requestFocus();
 
-        } else if (frame_emoji_view.getVisibility() == View.GONE) {
+        } else if (linear_emoji_view.getVisibility() == View.GONE) {
 
             if (v.getId() != R.id.message_edit) {
                 AndroidUtilities.hideKeyboard(messageEdit);
                 emoji_btn.setBackgroundResource(R.drawable.ic_keyboard_emoji);
-                frame_emoji_view.setVisibility(View.VISIBLE);
+                linear_emoji_view.setVisibility(View.VISIBLE);
+                getSupportFragmentManager().beginTransaction().add(R.id.emoji_fragment_container, emojiFragment).commit();
                 if (emojiView == null) {
-                    emojiView = new EmojiView(this);
-                    frame_emoji_view.addView(emojiView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
+                    //emojiView = new EmojiView(this);
+                    //frame_emoji_view.addView(emojiView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
                 }
             }
         }
