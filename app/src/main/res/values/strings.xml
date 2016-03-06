@@ -2,5 +2,4 @@
     <string name="app_name">EmojiCFC</string>
     <string name="enter_message_hint">Write a message…</string>
     <string name="send_message_icon">&#58942;</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
