@@ -14,8 +14,14 @@ import android.widget.TextView;
 
 public class EmojiGridPageFragment extends Fragment {
 
+    private int page;
+
     public EmojiGridPageFragment() {
         // Required empty public constructor
+    }
+
+    public void createInstance(int page) {
+        this.page = page;
     }
 
     @Override
@@ -29,22 +35,25 @@ public class EmojiGridPageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         GridView gridView = (GridView) view.findViewById(R.id.emoji_grid_container);
-        gridView.setAdapter(new EmojiGridAdapter());
+        gridView.setAdapter(new EmojiGridAdapter(page));
 
     }
 
     private class EmojiGridAdapter extends BaseAdapter {
 
-        private final int emojiPage;
+        private int emojiPage;
 
-        public EmojiGridAdapter() {
-            emojiPage = 0;
+        public EmojiGridAdapter(int emojiPage) {
+            this.emojiPage = emojiPage;
         }
-
 
         @Override
         public int getCount() {
-            return EmojiData.dataColored[emojiPage].length;
+            if (emojiPage == -1) {
+                return 1;
+            } else {
+                return EmojiData.data[emojiPage - 1].length;
+            }
         }
 
         @Override
@@ -59,26 +68,24 @@ public class EmojiGridPageFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-           /* ImageView imageView = (ImageView) convertView;
-            if (imageView == null) {
-                imageView = new ImageView(getContext());
-            }*/
 
             TextView textView = (TextView) convertView;
             if (textView == null) {
                 textView = new TextView(getContext());
             }
-
-            //String color = "\uD83C\uDFFB";
             String coloredCode;
-            coloredCode = EmojiData.dataColored[emojiPage][position];
 
-            textView.setText(coloredCode);
+
+            if (emojiPage == -1) {
+                //recent emoji
+                textView.setText("0");
+            } else {
+                coloredCode = EmojiData.data[emojiPage - 1][position];
+                textView.setText(coloredCode);
+            }
+
             textView.setGravity(Gravity.CENTER);
             return textView;
-
-            /*imageView.setImageDrawable(Emoji.getEmojiImage(coloredCode));
-            return imageView;*/
         }
     }
 

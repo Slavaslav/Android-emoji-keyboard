@@ -1,12 +1,12 @@
 package com.slava.emojicfc;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -84,13 +84,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public Fragment getItem(int position) {
-            return new EmojiGridPageFragment();
+        public Fragment getItem(int page) {
+            if (page == 0) {
+                page = -1;
+            }
+            EmojiGridPageFragment emojiGridPageFragment = new EmojiGridPageFragment();
+            emojiGridPageFragment.createInstance(page);
+
+            return emojiGridPageFragment;
         }
 
         @Override
         public int getCount() {
-            return 6;
+            return EmojiData.data.length + 1;
         }
     }
 }
