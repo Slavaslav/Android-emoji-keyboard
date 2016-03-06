@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class EmojiPagerAdapter extends FragmentStatePagerAdapter {
+    private class EmojiPagerAdapter extends FragmentPagerAdapter {
 
         public EmojiPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int page) {
             if (page == 0) {
                 page = -1;
+            } else {
+                page = page - 1;
             }
             EmojiGridPageFragment emojiGridPageFragment = new EmojiGridPageFragment();
             emojiGridPageFragment.createInstance(page);
