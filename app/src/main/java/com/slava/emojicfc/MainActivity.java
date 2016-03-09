@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public static volatile Context applicationContext;
     ArrayList<View> viewsEmojiLine = new ArrayList<>();
     ArrayList<FrameLayout> viewsEmojiFrame = new ArrayList<>();
+    ArrayList<ImageView> viewsEmojiImage = new ArrayList<>();
     private EditText messageEdit;
     private ImageView emoji_btn;
     private LinearLayout linear_emoji_view;
@@ -70,12 +71,22 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
 
                 //set style uncheck item
+                String resourceName = "ic_emoji" + emoji_previous_page;
+                int resourceID = getResources().getIdentifier(resourceName, "drawable",
+                        getPackageName());
+                viewsEmojiImage.get(emoji_previous_page).setImageResource(resourceID);
+
                 ViewGroup.LayoutParams layoutParams = viewsEmojiLine.get(emoji_previous_page).getLayoutParams();
                 layoutParams.height = AndroidUtilities.dp(1);
                 viewsEmojiLine.get(emoji_previous_page).setLayoutParams(layoutParams);
                 viewsEmojiLine.get(emoji_previous_page).setBackgroundColor(0x4DAAAAAA);
 
                 // set style check item
+                resourceName = "ic_emoji" + position + "_check";
+                resourceID = getResources().getIdentifier(resourceName, "drawable",
+                        getPackageName());
+                viewsEmojiImage.get(position).setImageResource(resourceID);
+
                 layoutParams = viewsEmojiLine.get(position).getLayoutParams();
                 layoutParams.height = AndroidUtilities.dp(2);
                 viewsEmojiLine.get(position).setLayoutParams(layoutParams);
@@ -96,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (linear_emoji_view.getVisibility() == View.VISIBLE) {
             linear_emoji_view.setVisibility(View.GONE);
-            emoji_btn.setBackgroundResource(R.drawable.emoji_button);
+            emoji_btn.setBackgroundResource(R.drawable.ic_emoji1);
             AndroidUtilities.showKeyboard(messageEdit);
             messageEdit.requestFocus();
 
@@ -125,17 +136,26 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
+                    resourceName = "emoji_image_icon" + i;
+                    resourceID = getResources().getIdentifier(resourceName, "id",
+                            getPackageName());
+                    ImageView view2 = (ImageView) findViewById(resourceID);
+                    viewsEmojiImage.add(view2);
+
                 }
 
                 ViewGroup.LayoutParams layoutParams = viewsEmojiLine.get(0).getLayoutParams();
                 layoutParams.height = AndroidUtilities.dp(2);
                 viewsEmojiLine.get(0).setLayoutParams(layoutParams);
                 viewsEmojiLine.get(0).setBackgroundColor(0xff33b5e5);
+
+                viewsEmojiImage.get(0).setImageResource(R.drawable.ic_emoji0_check);
+
                 emoji_previous_page = 0;
             }
 
             AndroidUtilities.hideKeyboard(messageEdit);
-            emoji_btn.setBackgroundResource(R.drawable.ic_keyboard_emoji);
+            emoji_btn.setBackgroundResource(R.drawable.ic_emoji7);
             linear_emoji_view.setVisibility(View.VISIBLE);
 
         }
