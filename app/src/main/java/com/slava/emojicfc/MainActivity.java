@@ -8,18 +8,24 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     public static volatile Context applicationContext;
+    ArrayList<View> viewsEmojiLine = new ArrayList<>();
+    ArrayList<FrameLayout> viewsEmojiFrame = new ArrayList<>();
     private EditText messageEdit;
     private ImageView emoji_btn;
     private LinearLayout linear_emoji_view;
     private ViewPager viewPager;
+    private int emoji_previous_page = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,35 @@ public class MainActivity extends AppCompatActivity {
         });
 
         viewPager = (ViewPager) findViewById(R.id.emoji_pager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                //set style uncheck item
+                ViewGroup.LayoutParams layoutParams = viewsEmojiLine.get(emoji_previous_page).getLayoutParams();
+                layoutParams.height = AndroidUtilities.dp(1);
+                viewsEmojiLine.get(emoji_previous_page).setLayoutParams(layoutParams);
+                viewsEmojiLine.get(emoji_previous_page).setBackgroundColor(0x4DAAAAAA);
+
+                // set style check item
+                layoutParams = viewsEmojiLine.get(position).getLayoutParams();
+                layoutParams.height = AndroidUtilities.dp(2);
+                viewsEmojiLine.get(position).setLayoutParams(layoutParams);
+                viewsEmojiLine.get(position).setBackgroundColor(0xff33b5e5);
+                emoji_previous_page = position;
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
@@ -68,6 +103,35 @@ public class MainActivity extends AppCompatActivity {
         } else if (linear_emoji_view.getVisibility() == View.GONE && v.getId() == R.id.frame_emoji_btn) {
             if (viewPager.getAdapter() == null) {
                 viewPager.setAdapter(new EmojiPagerAdapter(getSupportFragmentManager()));
+
+                for (int i = 0; i < EmojiData.data.length + 1; i++) {
+
+                    String resourceName = "emoji_icon_line" + i;
+                    int resourceID = getResources().getIdentifier(resourceName, "id",
+                            getPackageName());
+                    View view = findViewById(resourceID);
+                    viewsEmojiLine.add(view);
+
+                    resourceName = "emoji_frame_icon" + i;
+                    resourceID = getResources().getIdentifier(resourceName, "id",
+                            getPackageName());
+                    FrameLayout view1 = (FrameLayout) findViewById(resourceID);
+                    viewsEmojiFrame.add(view1);
+                    final int k = i;
+                    view1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            viewPager.setCurrentItem(k);
+                        }
+                    });
+
+                }
+
+                ViewGroup.LayoutParams layoutParams = viewsEmojiLine.get(0).getLayoutParams();
+                layoutParams.height = AndroidUtilities.dp(2);
+                viewsEmojiLine.get(0).setLayoutParams(layoutParams);
+                viewsEmojiLine.get(0).setBackgroundColor(0xff33b5e5);
+                emoji_previous_page = 0;
             }
 
             AndroidUtilities.hideKeyboard(messageEdit);
