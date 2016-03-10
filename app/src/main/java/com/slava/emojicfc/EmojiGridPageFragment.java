@@ -1,6 +1,7 @@
 package com.slava.emojicfc;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -35,7 +36,7 @@ public class EmojiGridPageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         GridView gridView = (GridView) view.findViewById(R.id.emoji_grid_container);
-        gridView.setAdapter(new EmojiGridAdapter(page));
+        new EmojiGridHandler().execute(gridView);
 
     }
 
@@ -86,6 +87,20 @@ public class EmojiGridPageFragment extends Fragment {
 
             textView.setGravity(Gravity.CENTER);
             return textView;
+        }
+    }
+
+    private class EmojiGridHandler extends AsyncTask<GridView, Void, GridView> {
+
+        @Override
+        protected GridView doInBackground(GridView... params) {
+            return params[0];
+        }
+
+        @Override
+        protected void onPostExecute(GridView g) {
+            super.onPostExecute(g);
+            g.setAdapter(new EmojiGridAdapter(page));
         }
     }
 
