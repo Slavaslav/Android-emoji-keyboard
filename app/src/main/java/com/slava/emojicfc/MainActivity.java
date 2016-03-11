@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
 
+                if (emoji_previous_page == position)
+                    return;
+
                 //set style uncheck item
                 String resourceName = "ic_emoji" + emoji_previous_page;
                 int resourceID = getResources().getIdentifier(resourceName, "drawable",
