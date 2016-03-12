@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -104,6 +105,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+       /* String s = "";
+
+        for (int i = 0; i < EmojiData.DATA4.length; i++) {
+            s = s + "\"" + EmojiData.DATA4[i] + "\",";
+        }
+        Log.d("LOG", " s " + s);*/
+
+
+        Log.d("LOG", " DATA lenght " + EmojiData.DATA.length);
+        Log.d("LOG", " data lenght " + EmojiData.emojiData[0].length);
+
+        Log.d("LOG", " DATA lenght " + EmojiData.DATA1.length);
+        Log.d("LOG", " data lenght " + EmojiData.emojiData[1].length);
+
+        Log.d("LOG", " DATA lenght " + EmojiData.DATA2.length);
+        Log.d("LOG", " data lenght " + EmojiData.emojiData[2].length);
+
+        Log.d("LOG", " DATA lenght " + EmojiData.DATA3.length);
+        Log.d("LOG", " data lenght " + EmojiData.emojiData[3].length);
+
+        Log.d("LOG", " DATA lenght " + EmojiData.DATA4.length);
+        Log.d("LOG", " data lenght " + EmojiData.emojiData[4].length);
+
+
     }
 
     private void createEmojiView(View v) {
@@ -185,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return EmojiData.data.length + 1;
+            return EmojiData.emojiData.length + 1;
         }
     }
 }

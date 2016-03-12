@@ -53,7 +53,7 @@ public class EmojiGridPageFragment extends Fragment {
             if (emojiPage == -1) {
                 return 1;
             } else {
-                return EmojiData.data[emojiPage].length;
+                return EmojiData.emojiData[emojiPage].length;
             }
         }
 
@@ -81,7 +81,7 @@ public class EmojiGridPageFragment extends Fragment {
                 //recent emoji
                 textView.setText("0");
             } else {
-                coloredCode = EmojiData.data[emojiPage][position];
+                coloredCode = EmojiData.emojiData[emojiPage][position];
                 textView.setText(coloredCode);
             }
 
