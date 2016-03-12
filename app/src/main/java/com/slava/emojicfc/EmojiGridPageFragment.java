@@ -4,7 +4,6 @@ package com.slava.emojicfc;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +41,7 @@ public class EmojiGridPageFragment extends Fragment {
 
     private class EmojiGridAdapter extends BaseAdapter {
 
+        LayoutInflater inflater = getActivity().getLayoutInflater();
         private int emojiPage;
 
         public EmojiGridAdapter(int emojiPage) {
@@ -70,23 +70,19 @@ public class EmojiGridPageFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            TextView textView = (TextView) convertView;
-            if (textView == null) {
-                textView = new TextView(getContext());
-            }
-            String coloredCode;
+            if (convertView == null)
+                convertView = inflater.inflate(R.layout.emoji_item, parent, false);
 
 
             if (emojiPage == -1) {
                 //recent emoji
-                textView.setText("0");
+                ((TextView) convertView.findViewById(R.id.emoji_icon)).setText("0");
             } else {
-                coloredCode = EmojiData.emojiData[emojiPage][position];
-                textView.setText(coloredCode);
+                String coloredCode = EmojiData.emojiData[emojiPage][position];
+                ((TextView) convertView.findViewById(R.id.emoji_icon)).setText(coloredCode);
             }
 
-            textView.setGravity(Gravity.CENTER);
-            return textView;
+            return convertView;
         }
     }
 
