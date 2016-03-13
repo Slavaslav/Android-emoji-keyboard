@@ -69,20 +69,30 @@ public class EmojiGridPageFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder;
 
-            if (convertView == null)
+            if (convertView == null) {
                 convertView = inflater.inflate(R.layout.emoji_item, parent, false);
-
+                viewHolder = new ViewHolder();
+                viewHolder.txtItem = (TextView) convertView.findViewById(R.id.emoji_icon);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
 
             if (emojiPage == -1) {
                 //recent emoji
-                ((TextView) convertView.findViewById(R.id.emoji_icon)).setText("0");
+                viewHolder.txtItem.setText("0");
             } else {
                 String coloredCode = EmojiData.emojiData[emojiPage][position];
-                ((TextView) convertView.findViewById(R.id.emoji_icon)).setText(coloredCode);
+                viewHolder.txtItem.setText(coloredCode);
             }
 
             return convertView;
+        }
+
+        private class ViewHolder {
+            TextView txtItem;
         }
     }
 
