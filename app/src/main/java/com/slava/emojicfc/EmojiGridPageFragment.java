@@ -41,8 +41,8 @@ public class EmojiGridPageFragment extends Fragment {
 
     private class EmojiGridAdapter extends BaseAdapter {
 
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        private int emojiPage;
+        final LayoutInflater inflater = getActivity().getLayoutInflater();
+        private final int emojiPage;
 
         public EmojiGridAdapter(int emojiPage) {
             this.emojiPage = emojiPage;

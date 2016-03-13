@@ -100,168 +100,160 @@
             android:baselineAligned="false"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/emoji_frame_icon0"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
+                tools:ignore="NestedWeights">
 
-                <FrameLayout
-                    android:id="@+id/emoji_frame_icon0"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    tools:ignore="NestedWeights">
+                <ImageView
+                    android:id="@+id/emoji_image_icon0"
+                    android:layout_width="@dimen/emoji_icon"
+                    android:layout_height="@dimen/emoji_icon"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_emoji0"
+                    tools:ignore="ContentDescription" />
 
-                    <ImageView
-                        android:id="@+id/emoji_image_icon0"
-                        android:layout_width="@dimen/emoji_icon"
-                        android:layout_height="@dimen/emoji_icon"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_emoji0"
-                        tools:ignore="ContentDescription" />
+                <View
+                    android:id="@+id/emoji_icon_line0"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/attachment_icon_unknown" />
+            </FrameLayout>
 
-                    <View
-                        android:id="@+id/emoji_icon_line0"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_gravity="bottom"
-                        android:background="@color/attachment_icon_unknown" />
-                </FrameLayout>
+            <FrameLayout
+                android:id="@+id/emoji_frame_icon1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-                <FrameLayout
-                    android:id="@+id/emoji_frame_icon1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/emoji_image_icon1"
+                    android:layout_width="@dimen/emoji_icon"
+                    android:layout_height="@dimen/emoji_icon"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_emoji1"
+                    tools:ignore="ContentDescription" />
 
-                    <ImageView
-                        android:id="@+id/emoji_image_icon1"
-                        android:layout_width="@dimen/emoji_icon"
-                        android:layout_height="@dimen/emoji_icon"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_emoji1"
-                        tools:ignore="ContentDescription" />
+                <View
+                    android:id="@+id/emoji_icon_line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/attachment_icon_unknown" />
+            </FrameLayout>
 
-                    <View
-                        android:id="@+id/emoji_icon_line1"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_gravity="bottom"
-                        android:background="@color/attachment_icon_unknown" />
-                </FrameLayout>
+            <FrameLayout
+                android:id="@+id/emoji_frame_icon2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-                <FrameLayout
-                    android:id="@+id/emoji_frame_icon2"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/emoji_image_icon2"
+                    android:layout_width="@dimen/emoji_icon"
+                    android:layout_height="@dimen/emoji_icon"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_emoji2"
+                    tools:ignore="ContentDescription" />
 
-                    <ImageView
-                        android:id="@+id/emoji_image_icon2"
-                        android:layout_width="@dimen/emoji_icon"
-                        android:layout_height="@dimen/emoji_icon"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_emoji2"
-                        tools:ignore="ContentDescription" />
+                <View
+                    android:id="@+id/emoji_icon_line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/attachment_icon_unknown" />
+            </FrameLayout>
 
-                    <View
-                        android:id="@+id/emoji_icon_line2"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_gravity="bottom"
-                        android:background="@color/attachment_icon_unknown" />
-                </FrameLayout>
+            <FrameLayout
+                android:id="@+id/emoji_frame_icon3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-                <FrameLayout
-                    android:id="@+id/emoji_frame_icon3"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/emoji_image_icon3"
+                    android:layout_width="@dimen/emoji_icon"
+                    android:layout_height="@dimen/emoji_icon"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_emoji3"
+                    tools:ignore="ContentDescription" />
 
-                    <ImageView
-                        android:id="@+id/emoji_image_icon3"
-                        android:layout_width="@dimen/emoji_icon"
-                        android:layout_height="@dimen/emoji_icon"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_emoji3"
-                        tools:ignore="ContentDescription" />
+                <View
+                    android:id="@+id/emoji_icon_line3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/attachment_icon_unknown" />
+            </FrameLayout>
 
-                    <View
-                        android:id="@+id/emoji_icon_line3"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_gravity="bottom"
-                        android:background="@color/attachment_icon_unknown" />
-                </FrameLayout>
+            <FrameLayout
+                android:id="@+id/emoji_frame_icon4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-                <FrameLayout
-                    android:id="@+id/emoji_frame_icon4"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/emoji_image_icon4"
+                    android:layout_width="@dimen/emoji_icon"
+                    android:layout_height="@dimen/emoji_icon"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_emoji4"
+                    tools:ignore="ContentDescription" />
 
-                    <ImageView
-                        android:id="@+id/emoji_image_icon4"
-                        android:layout_width="@dimen/emoji_icon"
-                        android:layout_height="@dimen/emoji_icon"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_emoji4"
-                        tools:ignore="ContentDescription" />
+                <View
+                    android:id="@+id/emoji_icon_line4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/attachment_icon_unknown" />
+            </FrameLayout>
 
-                    <View
-                        android:id="@+id/emoji_icon_line4"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_gravity="bottom"
-                        android:background="@color/attachment_icon_unknown" />
-                </FrameLayout>
+            <FrameLayout
+                android:id="@+id/emoji_frame_icon5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-                <FrameLayout
-                    android:id="@+id/emoji_frame_icon5"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/emoji_image_icon5"
+                    android:layout_width="@dimen/emoji_icon"
+                    android:layout_height="@dimen/emoji_icon"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_emoji5"
+                    tools:ignore="ContentDescription" />
 
-                    <ImageView
-                        android:id="@+id/emoji_image_icon5"
-                        android:layout_width="@dimen/emoji_icon"
-                        android:layout_height="@dimen/emoji_icon"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_emoji5"
-                        tools:ignore="ContentDescription" />
+                <View
+                    android:id="@+id/emoji_icon_line5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/attachment_icon_unknown" />
+            </FrameLayout>
 
-                    <View
-                        android:id="@+id/emoji_icon_line5"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_gravity="bottom"
-                        android:background="@color/attachment_icon_unknown" />
-                </FrameLayout>
+            <FrameLayout
+                android:id="@+id/emoji_frame_icon6"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-                <FrameLayout
-                    android:id="@+id/emoji_frame_icon6"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                <ImageView
+                    android:layout_width="@dimen/emoji_icon"
+                    android:layout_height="@dimen/emoji_icon"
+                    android:layout_gravity="center"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_emoji6"
+                    tools:ignore="ContentDescription" />
 
-                    <ImageView
-                        android:layout_width="@dimen/emoji_icon"
-                        android:layout_height="@dimen/emoji_icon"
-                        android:layout_gravity="center"
-                        android:scaleType="center"
-                        android:src="@drawable/ic_emoji6"
-                        tools:ignore="ContentDescription" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/attachment_icon_unknown" />
+            </FrameLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_gravity="bottom"
-                        android:background="@color/attachment_icon_unknown" />
-                </FrameLayout>
-
-            </LinearLayout>
         </LinearLayout>
 
         <android.support.v4.view.ViewPager

@@ -19,9 +19,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     public static volatile Context applicationContext;
-    ArrayList<View> viewsEmojiLine = new ArrayList<>();
-    ArrayList<FrameLayout> viewsEmojiFrame = new ArrayList<>();
-    ArrayList<ImageView> viewsEmojiImage = new ArrayList<>();
+    private final ArrayList<View> viewsEmojiLine = new ArrayList<>();
+    private final ArrayList<FrameLayout> viewsEmojiFrame = new ArrayList<>();
+    private final ArrayList<ImageView> viewsEmojiImage = new ArrayList<>();
     private EditText messageEdit;
     private ImageView emoji_btn;
     private LinearLayout linear_emoji_view;
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 if (emoji_previous_page == position)
                     return;
 
-                //set style uncheck item
+                //set style unselected item
                 String resourceName = "ic_emoji" + emoji_previous_page;
                 int resourceID = getResources().getIdentifier(resourceName, "drawable",
                         getPackageName());
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 viewsEmojiLine.get(emoji_previous_page).setLayoutParams(layoutParams);
                 viewsEmojiLine.get(emoji_previous_page).setBackgroundColor(0x4DAAAAAA);
 
-                // set style check item
+                // set style unselected item
                 resourceName = "ic_emoji" + position + "_check";
                 resourceID = getResources().getIdentifier(resourceName, "drawable",
                         getPackageName());
