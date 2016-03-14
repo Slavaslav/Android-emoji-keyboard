@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <declare-styleable name="Emoji">
+        <attr name="emojiSize" format="dimension" />
+        <attr name="emojiAlignment" format="enum">
+            <enum name="bottom" value="0" />
+            <enum name="baseline" value="1" />
+        </attr>
+        <attr name="emojiTextStart" format="integer" />
+        <attr name="emojiTextLength" format="integer" />
+    </declare-styleable>
+
 </resources>
