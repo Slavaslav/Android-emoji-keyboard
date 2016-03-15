@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 viewsEmojiLine.get(emoji_previous_page).setLayoutParams(layoutParams);
                 viewsEmojiLine.get(emoji_previous_page).setBackgroundColor(0x4DAAAAAA);
 
-                // set style unselected item
+                // set style selected item
                 resourceName = "ic_emoji" + position + "_check";
                 resourceID = getResources().getIdentifier(resourceName, "drawable",
                         getPackageName());

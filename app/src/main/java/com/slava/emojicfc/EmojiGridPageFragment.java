@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -69,7 +70,7 @@ public class EmojiGridPageFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
+            /*ViewHolder viewHolder;
 
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.emoji_item, parent, false);
@@ -86,13 +87,33 @@ public class EmojiGridPageFragment extends Fragment {
             } else {
                 String coloredCode = EmojiData.emojiData[emojiPage][position];
                 viewHolder.txtItem.setText(coloredCode);
+            }*/
+
+            ViewHolder viewHolder;
+
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.emoji_item_image, parent, false);
+                viewHolder = new ViewHolder();
+                viewHolder.imageView = (ImageView) convertView.findViewById(R.id.emoji_icon_image);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
             }
 
+
+            if (emojiPage == -1) {
+                //recent emoji
+                viewHolder.imageView.setImageResource(R.drawable.ic_emoji0);
+            } else {
+                String code = EmojiData.emojiData[emojiPage][position];
+                viewHolder.imageView.setImageResource(Emoji.hashMap.get(code));
+            }
             return convertView;
         }
 
         private class ViewHolder {
-            TextView txtItem;
+            TextView textView;
+            ImageView imageView;
         }
     }
 

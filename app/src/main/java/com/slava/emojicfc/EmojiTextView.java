@@ -1,13 +1,6 @@
 package com.slava.emojicfc;
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.text.SpannableStringBuilder;
-import android.text.TextUtils;
-import android.text.style.DynamicDrawableSpan;
-import android.util.AttributeSet;
-import android.widget.TextView;
-
+/*
 public class EmojiTextView extends TextView {
 
     private int emojiTextSize;
@@ -56,4 +49,4 @@ public class EmojiTextView extends TextView {
         super.setText(text, type);
     }
 
-}
+}*/
