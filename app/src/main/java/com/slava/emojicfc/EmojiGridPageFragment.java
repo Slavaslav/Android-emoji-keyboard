@@ -15,10 +15,14 @@ import android.widget.TextView;
 
 public class EmojiGridPageFragment extends Fragment {
 
+    static Listener listener;
     private int page;
-
     public EmojiGridPageFragment() {
         // Required empty public constructor
+    }
+
+    public static void setListener(Listener value) {
+        listener = value;
     }
 
     public void createInstance(int page) {
@@ -38,6 +42,14 @@ public class EmojiGridPageFragment extends Fragment {
         GridView gridView = (GridView) view.findViewById(R.id.emoji_grid_container);
         new EmojiGridHandler().execute(gridView);
 
+    }
+
+    private void sendEmoji(String code) {
+        listener.onClickEmoji(code);
+    }
+
+    public interface Listener {
+        void onClickEmoji(String code);
     }
 
     private class EmojiGridAdapter extends BaseAdapter {
@@ -100,14 +112,21 @@ public class EmojiGridPageFragment extends Fragment {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-
+            String code = null;
             if (emojiPage == -1) {
                 //recent emoji
                 viewHolder.imageView.setImageResource(R.drawable.ic_emoji0);
             } else {
-                String code = EmojiData.emojiData[emojiPage][position];
+                code = EmojiData.emojiData[emojiPage][position];
                 viewHolder.imageView.setImageResource(Emoji.hashMap.get(code));
             }
+            final String finalCode = code;
+            viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendEmoji(finalCode);
+                }
+            });
             return convertView;
         }
 
@@ -130,5 +149,4 @@ public class EmojiGridPageFragment extends Fragment {
             g.setAdapter(new EmojiGridAdapter(page));
         }
     }
-
 }

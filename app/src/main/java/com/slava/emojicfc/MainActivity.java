@@ -107,6 +107,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void createEmojiView(View v) {
 
+        EmojiGridPageFragment.setListener(new EmojiGridPageFragment.Listener() {
+            @Override
+            public void onClickEmoji(String code) {
+                messageEdit.setText(messageEdit.getText() + code);
+            }
+        });
+
         if (linear_emoji_view.getVisibility() == View.VISIBLE) {
             linear_emoji_view.setVisibility(View.GONE);
             emoji_btn.setBackgroundResource(R.drawable.ic_emoji1);
