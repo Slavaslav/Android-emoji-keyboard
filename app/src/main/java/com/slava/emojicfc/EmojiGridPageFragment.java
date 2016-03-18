@@ -104,7 +104,7 @@ public class EmojiGridPageFragment extends Fragment {
             ViewHolder viewHolder;
 
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.emoji_item_image, parent, false);
+                convertView = inflater.inflate(R.layout.item_emoji_image, parent, false);
                 viewHolder = new ViewHolder();
                 viewHolder.imageView = (ImageView) convertView.findViewById(R.id.emoji_icon_image);
                 convertView.setTag(viewHolder);
