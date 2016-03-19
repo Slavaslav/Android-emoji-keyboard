@@ -87,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
                     handler.postDelayed(runnable, 500);
                     return true;
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (handler == null) {
+                        return true;
+                    }
                     handler.removeCallbacks(runnable);
                     return true;
                 }
@@ -147,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (linear_emoji_view.getVisibility() == View.VISIBLE) {
             linear_emoji_view.setVisibility(View.GONE);
-            emoji_btn.setBackgroundResource(R.drawable.ic_emoji1);
+            emoji_btn.setImageResource(R.drawable.ic_emoji1);
             AndroidUtilities.showKeyboard(messageEdit);
             messageEdit.requestFocus();
 
@@ -194,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             AndroidUtilities.hideKeyboard(messageEdit);
-            emoji_btn.setBackgroundResource(R.drawable.ic_emoji7);
+            emoji_btn.setImageResource(R.drawable.ic_emoji7);
             linear_emoji_view.setVisibility(View.VISIBLE);
 
         }

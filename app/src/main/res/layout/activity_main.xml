@@ -56,8 +56,7 @@
                 android:layout_width="29dp"
                 android:layout_height="29dp"
                 android:layout_gravity="bottom"
-                android:background="@drawable/ic_emoji1"
-                android:scaleType="center"
+                android:src="@drawable/ic_emoji1"
                 tools:ignore="ContentDescription" />
         </FrameLayout>
 
