@@ -2,11 +2,14 @@ package com.slava.emojicfc;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -20,11 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static volatile Context applicationContext;
     private final ArrayList<View> viewsEmojiLine = new ArrayList<>();
-    private final ArrayList<FrameLayout> viewsEmojiFrame = new ArrayList<>();
     private final ArrayList<ImageView> viewsEmojiImage = new ArrayList<>();
     private EditText messageEdit;
-    private ImageView emoji_btn;
-    private LinearLayout linear_emoji_view;
     private ViewPager viewPager;
     private int emoji_previous_page = -1;
 
@@ -34,9 +34,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         applicationContext = getApplicationContext();
-
-        emoji_btn = (ImageView) findViewById(R.id.emoji_btn);
-        linear_emoji_view = (LinearLayout) findViewById(R.id.linear_emoji_view);
 
         FrameLayout frame_emoji_btn = (FrameLayout) findViewById(R.id.frame_emoji_btn);
         frame_emoji_btn.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +54,43 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 createEmojiView(v);
+            }
+        });
+
+    }
+
+    private void createEmojiView(View v) {
+
+        ImageView emoji_btn = (ImageView) findViewById(R.id.emoji_btn);
+        LinearLayout linear_emoji_view = (LinearLayout) findViewById(R.id.linear_emoji_view);
+
+        FrameLayout backSpace_btn = (FrameLayout) findViewById(R.id.emoji_frame_icon6);
+        backSpace_btn.setOnTouchListener(new View.OnTouchListener() {
+            private Handler handler;
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    messageEdit.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+                    handler.postDelayed(runnable, 50);
+                }
+            };
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (messageEdit.getText().length() == 0) {
+                        return true;
+                    } else if (handler == null) {
+                        handler = new Handler();
+                    }
+                    messageEdit.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+                    handler.postDelayed(runnable, 500);
+                    return true;
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    handler.removeCallbacks(runnable);
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -103,14 +137,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void createEmojiView(View v) {
 
         EmojiGridPageFragment.setListener(new EmojiGridPageFragment.Listener() {
             @Override
             public void onClickEmoji(String code) {
-                messageEdit.setText(messageEdit.getText() + code);
+                messageEdit.getText().append(code);
             }
         });
 
@@ -136,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
                     resourceID = getResources().getIdentifier(resourceName, "id",
                             getPackageName());
                     FrameLayout view1 = (FrameLayout) findViewById(resourceID);
-                    viewsEmojiFrame.add(view1);
                     final int k = i;
                     view1.setOnClickListener(new View.OnClickListener() {
                         @Override
