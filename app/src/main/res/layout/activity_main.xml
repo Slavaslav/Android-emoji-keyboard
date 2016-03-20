@@ -111,7 +111,7 @@
                     android:layout_width="@dimen/emoji_icon"
                     android:layout_height="@dimen/emoji_icon"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_emoji0"
+                    android:src="@drawable/ic_emoji0_selector"
                     tools:ignore="ContentDescription" />
 
                 <View
@@ -133,7 +133,7 @@
                     android:layout_width="@dimen/emoji_icon"
                     android:layout_height="@dimen/emoji_icon"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_emoji1"
+                    android:src="@drawable/ic_emoji1_selector"
                     tools:ignore="ContentDescription" />
 
                 <View
@@ -155,7 +155,7 @@
                     android:layout_width="@dimen/emoji_icon"
                     android:layout_height="@dimen/emoji_icon"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_emoji2"
+                    android:src="@drawable/ic_emoji2_selector"
                     tools:ignore="ContentDescription" />
 
                 <View
@@ -177,7 +177,7 @@
                     android:layout_width="@dimen/emoji_icon"
                     android:layout_height="@dimen/emoji_icon"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_emoji3"
+                    android:src="@drawable/ic_emoji3_selector"
                     tools:ignore="ContentDescription" />
 
                 <View
@@ -199,7 +199,7 @@
                     android:layout_width="@dimen/emoji_icon"
                     android:layout_height="@dimen/emoji_icon"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_emoji4"
+                    android:src="@drawable/ic_emoji4_selector"
                     tools:ignore="ContentDescription" />
 
                 <View
@@ -221,7 +221,7 @@
                     android:layout_width="@dimen/emoji_icon"
                     android:layout_height="@dimen/emoji_icon"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_emoji5"
+                    android:src="@drawable/ic_emoji5_selector"
                     tools:ignore="ContentDescription" />
 
                 <View

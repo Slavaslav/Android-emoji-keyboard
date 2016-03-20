@@ -1,6 +1,6 @@
-package com.slava.emojicfc;
+package com.slava.emojicfc.emoji;
 
-class EmojiData {
+public class EmojiData {
 
         public static final String[][] emojiData = {
                 {

@@ -17,6 +17,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.slava.emojicfc.emoji.EmojiData;
+import com.slava.emojicfc.emoji.EmojiGridPageFragment;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -111,10 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
 
                 //set style unselected item
-                String resourceName = "ic_emoji" + emoji_previous_page;
-                int resourceID = getResources().getIdentifier(resourceName, "drawable",
-                        getPackageName());
-                viewsEmojiImage.get(emoji_previous_page).setImageResource(resourceID);
+                viewsEmojiImage.get(emoji_previous_page).setSelected(false);
 
                 ViewGroup.LayoutParams layoutParams = viewsEmojiLine.get(emoji_previous_page).getLayoutParams();
                 layoutParams.height = AndroidUtilities.dp(1);
@@ -122,10 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 viewsEmojiLine.get(emoji_previous_page).setBackgroundColor(0x4DAAAAAA);
 
                 // set style selected item
-                resourceName = "ic_emoji" + position + "_check";
-                resourceID = getResources().getIdentifier(resourceName, "drawable",
-                        getPackageName());
-                viewsEmojiImage.get(position).setImageResource(resourceID);
+                viewsEmojiImage.get(position).setSelected(true);
 
                 layoutParams = viewsEmojiLine.get(position).getLayoutParams();
                 layoutParams.height = AndroidUtilities.dp(2);
@@ -191,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 viewsEmojiLine.get(0).setLayoutParams(layoutParams);
                 viewsEmojiLine.get(0).setBackgroundColor(0xff33b5e5);
 
-                viewsEmojiImage.get(0).setImageResource(R.drawable.ic_emoji0_check);
+                viewsEmojiImage.get(0).setSelected(true);
 
                 emoji_previous_page = 0;
             }
@@ -224,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return EmojiData.emojiData.length + 1;
+            return EmojiData.emojiData.length + 1; // one page for recent emoji
         }
     }
 }

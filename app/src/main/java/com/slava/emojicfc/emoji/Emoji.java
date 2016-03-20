@@ -1,4 +1,6 @@
-package com.slava.emojicfc;
+package com.slava.emojicfc.emoji;
+
+import com.slava.emojicfc.MainActivity;
 
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package com.slava.emojicfc;
+package com.slava.emojicfc.emoji;
 
 
 import android.os.AsyncTask;
@@ -10,13 +10,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.slava.emojicfc.R;
 
 
 public class EmojiGridPageFragment extends Fragment {
 
     static Listener listener;
     private int page;
+
     public EmojiGridPageFragment() {
         // Required empty public constructor
     }
@@ -82,25 +84,6 @@ public class EmojiGridPageFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            /*ViewHolder viewHolder;
-
-            if (convertView == null) {
-                convertView = inflater.inflate(R.layout.emoji_item, parent, false);
-                viewHolder = new ViewHolder();
-                viewHolder.txtItem = (TextView) convertView.findViewById(R.id.emoji_icon);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-
-            if (emojiPage == -1) {
-                //recent emoji
-                viewHolder.txtItem.setText("0");
-            } else {
-                String coloredCode = EmojiData.emojiData[emojiPage][position];
-                viewHolder.txtItem.setText(coloredCode);
-            }*/
-
             ViewHolder viewHolder;
 
             if (convertView == null) {
@@ -131,7 +114,6 @@ public class EmojiGridPageFragment extends Fragment {
         }
 
         private class ViewHolder {
-            TextView textView;
             ImageView imageView;
         }
     }
