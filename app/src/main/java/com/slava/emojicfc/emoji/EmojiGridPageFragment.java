@@ -16,7 +16,7 @@ import com.slava.emojicfc.R;
 
 public class EmojiGridPageFragment extends Fragment {
 
-    static Listener listener;
+    private static Listener listener;
     private int page;
 
     public EmojiGridPageFragment() {

@@ -1,6 +1,5 @@
 package com.slava.emojicfc;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static volatile Context applicationContext;
     private final ArrayList<View> viewsEmojiLine = new ArrayList<>();
     private final ArrayList<ImageView> viewsEmojiImage = new ArrayList<>();
     private EditText messageEdit;
@@ -35,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        applicationContext = getApplicationContext();
 
         FrameLayout frame_emoji_btn = (FrameLayout) findViewById(R.id.frame_emoji_btn);
         frame_emoji_btn.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         FrameLayout backSpace_btn = (FrameLayout) findViewById(R.id.emoji_frame_icon6);
         backSpace_btn.setOnTouchListener(new View.OnTouchListener() {
             private Handler handler;
-            Runnable runnable = new Runnable() {
+            final Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
                     messageEdit.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));

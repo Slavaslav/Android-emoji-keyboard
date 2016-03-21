@@ -1,12 +1,12 @@
 package com.slava.emojicfc.emoji;
 
-import com.slava.emojicfc.MainActivity;
+import com.slava.emojicfc.App;
 
 import java.util.HashMap;
 
-public class Emoji {
+class Emoji {
 
-    public static HashMap<CharSequence, Integer> hashMap = new HashMap<>();
+    public static final HashMap<CharSequence, Integer> hashMap = new HashMap<>();
 
     static {
 
@@ -16,8 +16,8 @@ public class Emoji {
         for (int i = 0; i < EmojiData.emojiData.length; i++) {
             for (int k = 0; k < EmojiData.emojiData[i].length; k++) {
                 resourceName = "emoji_" + n;
-                int resourceID = MainActivity.applicationContext.getResources().getIdentifier(resourceName, "drawable",
-                        MainActivity.applicationContext.getPackageName());
+                int resourceID = App.applicationContext.getResources().getIdentifier(resourceName, "drawable",
+                        App.applicationContext.getPackageName());
 
                 hashMap.put(EmojiData.emojiData[i][k], resourceID);
                 n++;

@@ -9,7 +9,7 @@ class AndroidUtilities {
 
     static {
 
-        density = MainActivity.applicationContext.getResources().getDisplayMetrics().density;
+        density = App.applicationContext.getResources().getDisplayMetrics().density;
 
     }
 
