@@ -2,6 +2,7 @@ package com.slava.emojicfc;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView emoji_btn = (ImageView) findViewById(R.id.emoji_btn);
         LinearLayout linear_emoji_view = (LinearLayout) findViewById(R.id.linear_emoji_view);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout_emoji);
 
         FrameLayout backSpace_btn = (FrameLayout) findViewById(R.id.emoji_frame_icon6);
         backSpace_btn.setOnTouchListener(new View.OnTouchListener() {
@@ -177,6 +180,11 @@ public class MainActivity extends AppCompatActivity {
                     ImageView view2 = (ImageView) findViewById(resourceID);
                     viewsEmojiImage.add(view2);
 
+
+                    resourceName = "ic_emoji" + i + "_selector";
+                    resourceID = getResources().getIdentifier(resourceName, "drawable",
+                            getPackageName());
+                    tabLayout.addTab(tabLayout.newTab().setIcon(resourceID));
                 }
 
                 ViewGroup.LayoutParams layoutParams = viewsEmojiLine.get(0).getLayoutParams();

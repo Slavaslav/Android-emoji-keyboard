@@ -255,10 +255,16 @@
 
         </LinearLayout>
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout_emoji"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/chat_bubble_stroke" />
+
         <android.support.v4.view.ViewPager
             android:id="@+id/emoji_pager"
             android:layout_width="match_parent"
-            android:layout_height="200dp"></android.support.v4.view.ViewPager>
+            android:layout_height="200dp" />
     </LinearLayout>
 
 </LinearLayout>
