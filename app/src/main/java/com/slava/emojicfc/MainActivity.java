@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     tabLayout.getTabAt(i).setCustomView(view);
                 }
 
-                tabLayout.getTabAt(1).select();
+                tabLayout.getTabAt(1).select(); // to activate ic_emoji0_selector, otherwise it will not be activated
                 tabLayout.getTabAt(0).select();
             }
 

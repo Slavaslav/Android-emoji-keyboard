@@ -101,6 +101,7 @@
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tab_layout_emoji"
+                style="@style/EmojiTabLayout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
@@ -119,12 +120,6 @@
                     android:scaleType="center"
                     android:src="@drawable/ic_emoji6"
                     tools:ignore="ContentDescription" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/attachment_icon_unknown" />
             </FrameLayout>
         </LinearLayout>
 

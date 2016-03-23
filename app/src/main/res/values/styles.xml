@@ -8,14 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <declare-styleable name="Emoji">
-        <attr name="emojiSize" format="dimension" />
-        <attr name="emojiAlignment" format="enum">
-            <enum name="bottom" value="0" />
-            <enum name="baseline" value="1" />
-        </attr>
-        <attr name="emojiTextStart" format="integer" />
-        <attr name="emojiTextLength" format="integer" />
-    </declare-styleable>
+    <style name="EmojiTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">#ff33b5e5</item>
+        <item name="tabPaddingStart">0dp</item>
+        <item name="tabPaddingEnd">0dp</item>
+    </style>
 
 </resources>
