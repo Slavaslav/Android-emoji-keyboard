@@ -99,144 +99,18 @@
             android:baselineAligned="false"
             android:orientation="horizontal">
 
-            <FrameLayout
-                android:id="@+id/emoji_frame_icon0"
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout_emoji"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                tools:ignore="NestedWeights">
-
-                <ImageView
-                    android:id="@+id/emoji_image_icon0"
-                    android:layout_width="@dimen/emoji_icon"
-                    android:layout_height="@dimen/emoji_icon"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_emoji0_selector"
-                    tools:ignore="ContentDescription" />
-
-                <View
-                    android:id="@+id/emoji_icon_line0"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/attachment_icon_unknown" />
-            </FrameLayout>
+                android:layout_weight="7"
+                android:background="@color/chat_bubble_stroke" />
 
             <FrameLayout
-                android:id="@+id/emoji_frame_icon1"
+                android:id="@+id/emoji_frame_backspace"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/emoji_image_icon1"
-                    android:layout_width="@dimen/emoji_icon"
-                    android:layout_height="@dimen/emoji_icon"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_emoji1_selector"
-                    tools:ignore="ContentDescription" />
-
-                <View
-                    android:id="@+id/emoji_icon_line1"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/attachment_icon_unknown" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/emoji_frame_icon2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/emoji_image_icon2"
-                    android:layout_width="@dimen/emoji_icon"
-                    android:layout_height="@dimen/emoji_icon"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_emoji2_selector"
-                    tools:ignore="ContentDescription" />
-
-                <View
-                    android:id="@+id/emoji_icon_line2"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/attachment_icon_unknown" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/emoji_frame_icon3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/emoji_image_icon3"
-                    android:layout_width="@dimen/emoji_icon"
-                    android:layout_height="@dimen/emoji_icon"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_emoji3_selector"
-                    tools:ignore="ContentDescription" />
-
-                <View
-                    android:id="@+id/emoji_icon_line3"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/attachment_icon_unknown" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/emoji_frame_icon4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/emoji_image_icon4"
-                    android:layout_width="@dimen/emoji_icon"
-                    android:layout_height="@dimen/emoji_icon"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_emoji4_selector"
-                    tools:ignore="ContentDescription" />
-
-                <View
-                    android:id="@+id/emoji_icon_line4"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/attachment_icon_unknown" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/emoji_frame_icon5"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/emoji_image_icon5"
-                    android:layout_width="@dimen/emoji_icon"
-                    android:layout_height="@dimen/emoji_icon"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_emoji5_selector"
-                    tools:ignore="ContentDescription" />
-
-                <View
-                    android:id="@+id/emoji_icon_line5"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/attachment_icon_unknown" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/emoji_frame_icon6"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1.1">
 
                 <ImageView
                     android:layout_width="@dimen/emoji_icon"
@@ -252,14 +126,7 @@
                     android:layout_gravity="bottom"
                     android:background="@color/attachment_icon_unknown" />
             </FrameLayout>
-
         </LinearLayout>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout_emoji"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@color/chat_bubble_stroke" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/emoji_pager"

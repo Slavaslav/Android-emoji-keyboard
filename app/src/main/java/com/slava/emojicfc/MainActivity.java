@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -20,15 +19,9 @@ import android.widget.LinearLayout;
 import com.slava.emojicfc.emoji.EmojiData;
 import com.slava.emojicfc.emoji.EmojiGridPageFragment;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
 
-    private final ArrayList<View> viewsEmojiLine = new ArrayList<>();
-    private final ArrayList<ImageView> viewsEmojiImage = new ArrayList<>();
     private EditText messageEdit;
-    private ViewPager viewPager;
-    private int emoji_previous_page = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
         ImageView emoji_btn = (ImageView) findViewById(R.id.emoji_btn);
         LinearLayout linear_emoji_view = (LinearLayout) findViewById(R.id.linear_emoji_view);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout_emoji);
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout_emoji);
 
-        FrameLayout backSpace_btn = (FrameLayout) findViewById(R.id.emoji_frame_icon6);
+        FrameLayout backSpace_btn = (FrameLayout) findViewById(R.id.emoji_frame_backspace);
         backSpace_btn.setOnTouchListener(new View.OnTouchListener() {
             private Handler handler;
             final Runnable runnable = new Runnable() {
@@ -99,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        viewPager = (ViewPager) findViewById(R.id.emoji_pager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.emoji_pager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -109,25 +102,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
 
-                if (emoji_previous_page == position)
-                    return;
-
-                //set style unselected item
-                viewsEmojiImage.get(emoji_previous_page).setSelected(false);
-
-                ViewGroup.LayoutParams layoutParams = viewsEmojiLine.get(emoji_previous_page).getLayoutParams();
-                layoutParams.height = AndroidUtilities.dp(1);
-                viewsEmojiLine.get(emoji_previous_page).setLayoutParams(layoutParams);
-                viewsEmojiLine.get(emoji_previous_page).setBackgroundColor(0x4DAAAAAA);
-
-                // set style selected item
-                viewsEmojiImage.get(position).setSelected(true);
-
-                layoutParams = viewsEmojiLine.get(position).getLayoutParams();
-                layoutParams.height = AndroidUtilities.dp(2);
-                viewsEmojiLine.get(position).setLayoutParams(layoutParams);
-                viewsEmojiLine.get(position).setBackgroundColor(0xff33b5e5);
-                emoji_previous_page = position;
+                tabLayout.getTabAt(position).select();
 
             }
 
@@ -154,47 +129,23 @@ public class MainActivity extends AppCompatActivity {
             if (viewPager.getAdapter() == null) {
                 viewPager.setAdapter(new EmojiPagerAdapter(getSupportFragmentManager()));
 
-                for (int i = 0; i < EmojiData.emojiData.length + 1; i++) {
+                tabLayout.setupWithViewPager(viewPager);
 
-                    String resourceName = "emoji_icon_line" + i;
-                    int resourceID = getResources().getIdentifier(resourceName, "id",
+                for (int i = 0; i < tabLayout.getTabCount(); i++) {
+
+                    View view = getLayoutInflater().inflate(R.layout.item_emoji_icon, null);
+                    ImageView imageView = (ImageView) view.findViewById(R.id.emoji_icon);
+
+                    String resourceName = "ic_emoji" + i + "_selector";
+                    int resourceID = getResources().getIdentifier(resourceName, "drawable",
                             getPackageName());
-                    View view = findViewById(resourceID);
-                    viewsEmojiLine.add(view);
 
-                    resourceName = "emoji_frame_icon" + i;
-                    resourceID = getResources().getIdentifier(resourceName, "id",
-                            getPackageName());
-                    FrameLayout view1 = (FrameLayout) findViewById(resourceID);
-                    final int k = i;
-                    view1.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            viewPager.setCurrentItem(k);
-                        }
-                    });
-
-                    resourceName = "emoji_image_icon" + i;
-                    resourceID = getResources().getIdentifier(resourceName, "id",
-                            getPackageName());
-                    ImageView view2 = (ImageView) findViewById(resourceID);
-                    viewsEmojiImage.add(view2);
-
-
-                    resourceName = "ic_emoji" + i + "_selector";
-                    resourceID = getResources().getIdentifier(resourceName, "drawable",
-                            getPackageName());
-                    tabLayout.addTab(tabLayout.newTab().setIcon(resourceID));
+                    imageView.setImageResource(resourceID);
+                    tabLayout.getTabAt(i).setCustomView(view);
                 }
 
-                ViewGroup.LayoutParams layoutParams = viewsEmojiLine.get(0).getLayoutParams();
-                layoutParams.height = AndroidUtilities.dp(2);
-                viewsEmojiLine.get(0).setLayoutParams(layoutParams);
-                viewsEmojiLine.get(0).setBackgroundColor(0xff33b5e5);
-
-                viewsEmojiImage.get(0).setSelected(true);
-
-                emoji_previous_page = 0;
+                tabLayout.getTabAt(1).select();
+                tabLayout.getTabAt(0).select();
             }
 
             AndroidUtilities.hideKeyboard(messageEdit);
