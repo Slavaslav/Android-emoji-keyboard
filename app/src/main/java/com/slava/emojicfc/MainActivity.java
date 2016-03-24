@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -22,19 +23,15 @@ import com.slava.emojicfc.emoji.EmojiGridPageFragment;
 public class MainActivity extends AppCompatActivity {
 
     private EditText messageEdit;
+    private LinearLayout linear_emoji_view;
+    private ImageView emoji_btn;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        FrameLayout frame_emoji_btn = (FrameLayout) findViewById(R.id.frame_emoji_btn);
-        frame_emoji_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createEmojiView(v);
-            }
-        });
 
         messageEdit = (EditText) findViewById(R.id.message_edit);
         messageEdit.setOnClickListener(new View.OnClickListener() {
@@ -50,14 +47,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+        FrameLayout frame_emoji_btn = (FrameLayout) findViewById(R.id.frame_emoji_btn);
+        frame_emoji_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createEmojiView(v);
+            }
+        });
 
-    private void createEmojiView(View v) {
+        emoji_btn = (ImageView) findViewById(R.id.emoji_btn);
+        linear_emoji_view = (LinearLayout) findViewById(R.id.linear_emoji_view);
 
-        ImageView emoji_btn = (ImageView) findViewById(R.id.emoji_btn);
-        LinearLayout linear_emoji_view = (LinearLayout) findViewById(R.id.linear_emoji_view);
-
-        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout_emoji);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout_emoji);
 
         FrameLayout backSpace_btn = (FrameLayout) findViewById(R.id.emoji_frame_backspace);
         backSpace_btn.setOnTouchListener(new View.OnTouchListener() {
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.emoji_pager);
+        viewPager = (ViewPager) findViewById(R.id.emoji_pager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -119,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void createEmojiView(View v) {
+
         if (linear_emoji_view.getVisibility() == View.VISIBLE) {
             linear_emoji_view.setVisibility(View.GONE);
             emoji_btn.setImageResource(R.drawable.ic_emoji1);
@@ -131,9 +137,11 @@ public class MainActivity extends AppCompatActivity {
 
                 tabLayout.setupWithViewPager(viewPager);
 
+                LayoutInflater inflater = getLayoutInflater();
+
                 for (int i = 0; i < tabLayout.getTabCount(); i++) {
 
-                    View view = getLayoutInflater().inflate(R.layout.item_emoji_icon, null);
+                    View view = inflater.inflate(R.layout.item_emoji_icon, null);
                     ImageView imageView = (ImageView) view.findViewById(R.id.emoji_icon);
 
                     String resourceName = "ic_emoji" + i + "_selector";
