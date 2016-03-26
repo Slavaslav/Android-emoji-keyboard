@@ -1,5 +1,7 @@
 package com.slava.emojicfc;
 
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -8,6 +10,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.DynamicDrawableSpan;
+import android.text.style.ImageSpan;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,6 +23,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.slava.emojicfc.emoji.Emoji;
 import com.slava.emojicfc.emoji.EmojiData;
 import com.slava.emojicfc.emoji.EmojiGridPageFragment;
 
@@ -116,7 +123,16 @@ public class MainActivity extends AppCompatActivity {
         EmojiGridPageFragment.setListener(new EmojiGridPageFragment.Listener() {
             @Override
             public void onClickEmoji(String code) {
-                messageEdit.getText().append(code);
+                Drawable drawable;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    drawable = getResources().getDrawable(Emoji.hashMap.get(code), App.applicationContext.getTheme());
+                } else {
+                    drawable = getDrawable(Emoji.hashMap.get(code));
+                }
+                drawable.setBounds(0, 0, AndroidUtilities.dp(25), AndroidUtilities.dp(25));
+                SpannableString spannableString = new SpannableString(" ");
+                spannableString.setSpan(new ImageSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                messageEdit.getText().append(spannableString);
             }
         });
 

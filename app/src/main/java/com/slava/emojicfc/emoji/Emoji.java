@@ -4,7 +4,7 @@ import com.slava.emojicfc.App;
 
 import java.util.HashMap;
 
-class Emoji {
+public class Emoji {
 
     public static final HashMap<CharSequence, Integer> hashMap = new HashMap<>();
 
