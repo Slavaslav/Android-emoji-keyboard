@@ -1,5 +1,6 @@
 package com.slava.emojicfc;
 
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -123,13 +124,18 @@ public class MainActivity extends AppCompatActivity {
         EmojiGridPageFragment.setListener(new EmojiGridPageFragment.Listener() {
             @Override
             public void onClickEmoji(String code) {
+
+                Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
+                int size = Math.abs(fontMetrics.descent) + Math.abs(fontMetrics.ascent);
+
                 Drawable drawable;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     drawable = getResources().getDrawable(Emoji.hashMap.get(code), App.applicationContext.getTheme());
                 } else {
-                    drawable = getDrawable(Emoji.hashMap.get(code));
+                    drawable = getResources().getDrawable(Emoji.hashMap.get(code));
                 }
-                drawable.setBounds(0, 0, AndroidUtilities.dp(25), AndroidUtilities.dp(25));
+
+                drawable.setBounds(0, 0, size, size);
                 SpannableString spannableString = new SpannableString(" ");
                 spannableString.setSpan(new ImageSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 messageEdit.getText().append(spannableString);
