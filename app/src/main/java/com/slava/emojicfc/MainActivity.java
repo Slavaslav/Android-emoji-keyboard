@@ -3,13 +3,13 @@ package com.slava.emojicfc;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
@@ -32,8 +32,8 @@ import com.slava.emojicfc.emoji.EmojiGridPageFragment;
 public class MainActivity extends AppCompatActivity {
 
     private EditText messageEdit;
-    private LinearLayout linear_emoji_view;
-    private ImageView emoji_btn;
+    private LinearLayout linearEmojiView;
+    private ImageView emojiBtn;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private SharedPreferences sharedPreferencesEmoji;
@@ -57,21 +57,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FrameLayout frame_emoji_btn = (FrameLayout) findViewById(R.id.frame_emoji_btn);
-        frame_emoji_btn.setOnClickListener(new View.OnClickListener() {
+        FrameLayout frameEmojiBtn = (FrameLayout) findViewById(R.id.frame_emoji_btn);
+        frameEmojiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createEmojiView(v);
             }
         });
 
-        emoji_btn = (ImageView) findViewById(R.id.emoji_btn);
-        linear_emoji_view = (LinearLayout) findViewById(R.id.linear_emoji_view);
+        emojiBtn = (ImageView) findViewById(R.id.emoji_btn);
+        linearEmojiView = (LinearLayout) findViewById(R.id.linear_emoji_view);
 
         tabLayout = (TabLayout) findViewById(R.id.tab_layout_emoji);
 
-        FrameLayout backSpace_btn = (FrameLayout) findViewById(R.id.emoji_frame_backspace);
-        backSpace_btn.setOnTouchListener(new View.OnTouchListener() {
+        FrameLayout backSpaceBtn = (FrameLayout) findViewById(R.id.emoji_frame_backspace);
+        backSpaceBtn.setOnTouchListener(new View.OnTouchListener() {
             private Handler handler;
             final Runnable runnable = new Runnable() {
                 @Override
@@ -113,7 +113,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
 
-                tabLayout.getTabAt(position).select();
+                TabLayout.Tab tab = tabLayout.getTabAt(position);
+
+                if (tab != null) {
+                    tab.select();
+                }
 
             }
 
@@ -138,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                         int count = sharedPreferencesEmoji.getInt(code, 0);
                         editor.putInt(code, ++count);
                     }
-                    editor.commit();
+                    editor.apply();
 
                 }
 
@@ -146,13 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
                 int size = Math.abs(fontMetrics.descent) + Math.abs(fontMetrics.ascent);
 
-                Drawable drawable;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    drawable = getResources().getDrawable(Emoji.hashMap.get(code), App.applicationContext.getTheme());
-                } else {
-                    drawable = getResources().getDrawable(Emoji.hashMap.get(code));
-                }
-
+                Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(code));
                 drawable.setBounds(0, 0, size, size);
                 SpannableString spannableString = new SpannableString(" ");
                 spannableString.setSpan(new ImageSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -165,13 +163,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void createEmojiView(View v) {
 
-        if (linear_emoji_view.getVisibility() == View.VISIBLE) {
-            linear_emoji_view.setVisibility(View.GONE);
-            emoji_btn.setImageResource(R.drawable.ic_emoji1);
+        if (linearEmojiView.getVisibility() == View.VISIBLE) {
+            linearEmojiView.setVisibility(View.GONE);
+            emojiBtn.setImageResource(R.drawable.ic_emoji1);
             AndroidUtilities.showKeyboard(messageEdit);
             messageEdit.requestFocus();
 
-        } else if (linear_emoji_view.getVisibility() == View.GONE && v.getId() == R.id.frame_emoji_btn) {
+        } else if (linearEmojiView.getVisibility() == View.GONE && v.getId() == R.id.frame_emoji_btn) {
             if (viewPager.getAdapter() == null) {
                 viewPager.setAdapter(new EmojiPagerAdapter(getSupportFragmentManager()));
 
@@ -189,18 +187,24 @@ public class MainActivity extends AppCompatActivity {
                             getPackageName());
 
                     imageView.setImageResource(resourceID);
-                    tabLayout.getTabAt(i).setCustomView(view);
+
+                    TabLayout.Tab tab = tabLayout.getTabAt(i);
+                    if (tab != null) {
+                        tab.setCustomView(view);
+                    }
                 }
 
-                tabLayout.getTabAt(1).select(); // to activate ic_emoji0_selector, otherwise it will not be activated
-                tabLayout.getTabAt(0).select();
+                TabLayout.Tab tab = tabLayout.getTabAt(0);
+                if (tab != null) {
+                    tab.select();
+                }
 
                 sharedPreferencesEmoji = getSharedPreferences("recentEmoji", MODE_PRIVATE);
             }
 
             AndroidUtilities.hideKeyboard(messageEdit);
-            emoji_btn.setImageResource(R.drawable.ic_emoji7);
-            linear_emoji_view.setVisibility(View.VISIBLE);
+            emojiBtn.setImageResource(R.drawable.ic_emoji7);
+            linearEmojiView.setVisibility(View.VISIBLE);
 
         }
     }
