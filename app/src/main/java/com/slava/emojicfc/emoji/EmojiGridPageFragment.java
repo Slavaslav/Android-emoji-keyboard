@@ -62,7 +62,7 @@ public class EmojiGridPageFragment extends Fragment {
         @Override
         public int getCount() {
             if (emojiPage == -1) {
-                return 1;
+                return Emoji.recentEmoji.size();
             } else {
                 return EmojiData.emojiData[emojiPage].length;
             }
@@ -93,8 +93,8 @@ public class EmojiGridPageFragment extends Fragment {
 
             String code = null;
             if (emojiPage == -1) {
-                //recent emoji
-                //viewHolder.imageView.setImageResource(R.drawable.ic_emoji0);
+                viewHolder.imageView.setImageResource(Emoji.hashMap.get(Emoji.recentEmoji.get(position)));
+
             } else {
                 code = EmojiData.emojiData[emojiPage][position];
                 viewHolder.imageView.setImageResource(Emoji.hashMap.get(code));

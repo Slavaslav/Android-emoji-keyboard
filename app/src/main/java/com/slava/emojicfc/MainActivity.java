@@ -1,6 +1,5 @@
 package com.slava.emojicfc;
 
-import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageView emojiBtn;
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private SharedPreferences sharedPreferencesEmoji;
     private ArrayList<ImageView> imageViews = new ArrayList<>();
     private int lastPage;
 
@@ -139,17 +137,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClickEmoji(String code) {
 
-                SharedPreferences.Editor editor = sharedPreferencesEmoji.edit();
-
-                int count;
-                if (sharedPreferencesEmoji.contains(code)) {
-                    count = sharedPreferencesEmoji.getInt(code, 0);
-                    editor.putInt(code, ++count);
-                } else {
-                    count = 0;
-                    editor.putInt(code, count);
-                }
-                editor.apply();
+                Emoji.addRecentEmoji(code);
 
                 Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
                 int size = Math.abs(fontMetrics.descent) + Math.abs(fontMetrics.ascent);
@@ -204,8 +192,6 @@ public class MainActivity extends AppCompatActivity {
                 if (tab != null) {
                     tab.select();
                 }
-
-                sharedPreferencesEmoji = getSharedPreferences("recentEmoji", MODE_PRIVATE);
             }
 
             AndroidUtilities.hideKeyboard(messageEdit);
