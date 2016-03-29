@@ -29,6 +29,8 @@ import com.slava.emojicfc.emoji.Emoji;
 import com.slava.emojicfc.emoji.EmojiData;
 import com.slava.emojicfc.emoji.EmojiGridPageFragment;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText messageEdit;
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private SharedPreferences sharedPreferencesEmoji;
+    private ArrayList<ImageView> imageViews = new ArrayList<>();
+    private int lastPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,10 +118,14 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
 
                 TabLayout.Tab tab = tabLayout.getTabAt(position);
-
                 if (tab != null) {
                     tab.select();
                 }
+
+                if (imageViews.get(lastPage).isSelected()) {
+                    imageViews.get(lastPage).setSelected(false);
+                }
+                lastPage = position;
 
             }
 
@@ -133,19 +141,15 @@ public class MainActivity extends AppCompatActivity {
 
                 SharedPreferences.Editor editor = sharedPreferencesEmoji.edit();
 
-                if (viewPager.getCurrentItem() != 0) {
-                    if (!sharedPreferencesEmoji.contains(code)) {
-                        int count = 0;
-                        editor.putInt(code, count);
-
-                    } else {
-                        int count = sharedPreferencesEmoji.getInt(code, 0);
-                        editor.putInt(code, ++count);
-                    }
-                    editor.apply();
-
+                int count;
+                if (sharedPreferencesEmoji.contains(code)) {
+                    count = sharedPreferencesEmoji.getInt(code, 0);
+                    editor.putInt(code, ++count);
+                } else {
+                    count = 0;
+                    editor.putInt(code, count);
                 }
-
+                editor.apply();
 
                 Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
                 int size = Math.abs(fontMetrics.descent) + Math.abs(fontMetrics.ascent);
@@ -187,14 +191,16 @@ public class MainActivity extends AppCompatActivity {
                             getPackageName());
 
                     imageView.setImageResource(resourceID);
+                    imageViews.add(imageView);
 
                     TabLayout.Tab tab = tabLayout.getTabAt(i);
                     if (tab != null) {
                         tab.setCustomView(view);
                     }
                 }
-
-                TabLayout.Tab tab = tabLayout.getTabAt(0);
+                lastPage = 0;
+                imageViews.get(lastPage).setSelected(true);
+                TabLayout.Tab tab = tabLayout.getTabAt(lastPage);
                 if (tab != null) {
                     tab.select();
                 }
