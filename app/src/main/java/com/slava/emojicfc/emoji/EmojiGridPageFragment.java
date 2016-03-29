@@ -46,10 +46,6 @@ public class EmojiGridPageFragment extends Fragment {
 
     }
 
-    private void sendEmoji(String code) {
-        listener.onClickEmoji(code);
-    }
-
     public interface Listener {
         void onClickEmoji(String code);
     }
@@ -107,7 +103,7 @@ public class EmojiGridPageFragment extends Fragment {
             viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    sendEmoji(finalCode);
+                    listener.onClickEmoji(finalCode);
                 }
             });
             return convertView;
