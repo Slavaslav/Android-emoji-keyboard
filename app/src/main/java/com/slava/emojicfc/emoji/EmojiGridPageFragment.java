@@ -98,7 +98,7 @@ public class EmojiGridPageFragment extends Fragment {
             String code = null;
             if (emojiPage == -1) {
                 //recent emoji
-                viewHolder.imageView.setImageResource(R.drawable.ic_emoji0);
+                //viewHolder.imageView.setImageResource(R.drawable.ic_emoji0);
             } else {
                 code = EmojiData.emojiData[emojiPage][position];
                 viewHolder.imageView.setImageResource(Emoji.hashMap.get(code));
