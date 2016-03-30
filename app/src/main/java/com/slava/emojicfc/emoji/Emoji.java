@@ -1,7 +1,6 @@
 package com.slava.emojicfc.emoji;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.slava.emojicfc.App;
 
@@ -11,7 +10,6 @@ import java.util.HashMap;
 public class Emoji {
 
     public static final HashMap<CharSequence, Integer> hashMap = new HashMap<>();
-    //public static final HashMap<CharSequence, Integer> recentEmoji = new HashMap<>();
     public static final ArrayList<String> recentEmoji = new ArrayList<>();
     public static final SharedPreferences sharedPreferencesEmoji = App.applicationContext.getSharedPreferences("recentEmoji", App.MODE_PRIVATE);
 
@@ -30,11 +28,6 @@ public class Emoji {
                 n++;
             }
         }
-
-        for (String s : sharedPreferencesEmoji.getAll().keySet()) {
-            recentEmoji.add(s);
-        }
-
     }
 
     public static void addRecentEmoji(String code) {
@@ -48,7 +41,17 @@ public class Emoji {
             count = 0;
             editor.putInt(code, count);
         }
-        Log.d("LOG", "LOG = " + count);
         editor.apply();
+    }
+
+    public static String getRecentEmoji(int position) {
+
+        if (recentEmoji.size() != sharedPreferencesEmoji.getAll().size()) {
+            recentEmoji.clear();
+            for (String s : sharedPreferencesEmoji.getAll().keySet()) {
+                recentEmoji.add(s);
+            }
+        }
+        return recentEmoji.get(position);
     }
 }

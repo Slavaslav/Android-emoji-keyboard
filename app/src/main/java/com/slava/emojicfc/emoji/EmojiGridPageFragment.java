@@ -18,6 +18,7 @@ public class EmojiGridPageFragment extends Fragment {
 
     private static Listener listener;
     private int page;
+    private EmojiGridAdapter emojiGridAdapter;
 
     public EmojiGridPageFragment() {
         // Required empty public constructor
@@ -42,15 +43,22 @@ public class EmojiGridPageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         GridView gridView = (GridView) view.findViewById(R.id.emoji_grid_container);
+        emojiGridAdapter = new EmojiGridAdapter(page);
         new EmojiGridHandler().execute(gridView);
+        if (page == -1) {
+            listener.createListGridAdapter(emojiGridAdapter);
+        }
+
 
     }
 
     public interface Listener {
         void onClickEmoji(String code);
+
+        void createListGridAdapter(EmojiGridAdapter emojiGridAdapter);
     }
 
-    private class EmojiGridAdapter extends BaseAdapter {
+    public class EmojiGridAdapter extends BaseAdapter {
 
         final LayoutInflater inflater = getActivity().getLayoutInflater();
         private final int emojiPage;
@@ -62,7 +70,7 @@ public class EmojiGridPageFragment extends Fragment {
         @Override
         public int getCount() {
             if (emojiPage == -1) {
-                return Emoji.recentEmoji.size();
+                return Emoji.sharedPreferencesEmoji.getAll().size();
             } else {
                 return EmojiData.emojiData[emojiPage].length;
             }
@@ -93,7 +101,8 @@ public class EmojiGridPageFragment extends Fragment {
 
             String code = null;
             if (emojiPage == -1) {
-                viewHolder.imageView.setImageResource(Emoji.hashMap.get(Emoji.recentEmoji.get(position)));
+                viewHolder.imageView.setImageResource(Emoji.hashMap.get(Emoji.getRecentEmoji(position)));
+
 
             } else {
                 code = EmojiData.emojiData[emojiPage][position];
@@ -124,7 +133,7 @@ public class EmojiGridPageFragment extends Fragment {
         @Override
         protected void onPostExecute(GridView g) {
             super.onPostExecute(g);
-            g.setAdapter(new EmojiGridAdapter(page));
+            g.setAdapter(emojiGridAdapter);
         }
     }
 }

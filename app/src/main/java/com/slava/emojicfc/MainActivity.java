@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ArrayList<ImageView> imageViews = new ArrayList<>();
     private int lastPage;
+    private ArrayList<EmojiGridPageFragment.EmojiGridAdapter> emojiGridAdapters = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClickEmoji(String code) {
 
                 Emoji.addRecentEmoji(code);
+                emojiGridAdapters.get(0).notifyDataSetChanged();
 
                 Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
                 int size = Math.abs(fontMetrics.descent) + Math.abs(fontMetrics.ascent);
@@ -147,6 +149,12 @@ public class MainActivity extends AppCompatActivity {
                 SpannableString spannableString = new SpannableString(" ");
                 spannableString.setSpan(new ImageSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 messageEdit.getText().append(spannableString);
+            }
+
+            @Override
+            public void createListGridAdapter(EmojiGridPageFragment.EmojiGridAdapter emojiGridAdapter) {
+                emojiGridAdapters.clear();
+                emojiGridAdapters.add(emojiGridAdapter);
             }
         });
 
