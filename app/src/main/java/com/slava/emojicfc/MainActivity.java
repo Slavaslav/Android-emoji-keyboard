@@ -32,14 +32,14 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final ArrayList<ImageView> imageViews = new ArrayList<>();
+    private final ArrayList<EmojiGridPageFragment.EmojiGridAdapter> emojiGridAdapters = new ArrayList<>();
     private EditText messageEdit;
     private LinearLayout linearEmojiView;
     private ImageView emojiBtn;
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private ArrayList<ImageView> imageViews = new ArrayList<>();
     private int lastPage;
-    private ArrayList<EmojiGridPageFragment.EmojiGridAdapter> emojiGridAdapters = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
