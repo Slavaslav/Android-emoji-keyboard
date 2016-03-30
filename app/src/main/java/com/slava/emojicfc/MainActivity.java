@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         viewPager = (ViewPager) findViewById(R.id.emoji_pager);
+        viewPager.setOffscreenPageLimit(6);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                     tab.select();
                 }
 
-                if (imageViews.get(lastPage).isSelected()) {
+                if (imageViews.get(lastPage).isSelected() && Emoji.sharedPreferencesEmoji.getAll().size() != 0) {
                     imageViews.get(lastPage).setSelected(false);
                 }
                 lastPage = position;
@@ -194,7 +195,12 @@ public class MainActivity extends AppCompatActivity {
                         tab.setCustomView(view);
                     }
                 }
-                lastPage = 0;
+
+                if (Emoji.sharedPreferencesEmoji.getAll().size() == 0) {
+                    lastPage = 1;
+                } else {
+                    lastPage = 0;
+                }
                 imageViews.get(lastPage).setSelected(true);
                 TabLayout.Tab tab = tabLayout.getTabAt(lastPage);
                 if (tab != null) {
@@ -217,14 +223,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int page) {
-            if (page == 0) {
-                page = -1;
-            } else {
-                page = page - 1;
-            }
             EmojiGridPageFragment emojiGridPageFragment = new EmojiGridPageFragment();
-            emojiGridPageFragment.createInstance(page);
-
+            emojiGridPageFragment.createInstance(page - 1);
             return emojiGridPageFragment;
         }
 
