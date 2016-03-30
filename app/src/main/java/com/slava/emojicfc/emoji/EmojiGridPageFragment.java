@@ -35,20 +35,28 @@ public class EmojiGridPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.emoji_grid_view, container, false);
+        if (page == -1 && Emoji.sharedPreferencesEmoji.getAll().size() == 0) {
+            return inflater.inflate(R.layout.emoji_no_recent, container, false);
+        } else {
+            return inflater.inflate(R.layout.emoji_grid_view, container, false);
+        }
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        GridView gridView = (GridView) view.findViewById(R.id.emoji_grid_container);
         emojiGridAdapter = new EmojiGridAdapter(page);
-        new EmojiGridHandler().execute(gridView);
         if (page == -1) {
             listener.createListGridAdapter(emojiGridAdapter);
         }
 
+        if (page == -1 && Emoji.sharedPreferencesEmoji.getAll().size() == 0) {
+
+        } else {
+            GridView gridView = (GridView) view.findViewById(R.id.emoji_grid_container);
+            new EmojiGridHandler().execute(gridView);
+        }
 
     }
 
@@ -87,7 +95,7 @@ public class EmojiGridPageFragment extends Fragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder;
 
             if (convertView == null) {
@@ -112,7 +120,11 @@ public class EmojiGridPageFragment extends Fragment {
             viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onClickEmoji(finalCode);
+                    if (emojiPage == -1) {
+                        listener.onClickEmoji(Emoji.getRecentEmoji(position));
+                    } else {
+                        listener.onClickEmoji(finalCode);
+                    }
                 }
             });
             return convertView;

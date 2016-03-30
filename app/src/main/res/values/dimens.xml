@@ -2,4 +2,5 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
 
     <dimen name="emoji_icon">25dp</dimen>
+    <dimen name="no_recent_emoji_text">20sp</dimen>
 </resources>
