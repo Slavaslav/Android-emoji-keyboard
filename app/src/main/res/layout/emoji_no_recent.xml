@@ -8,6 +8,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/no_recent_emoji"
-        android:textSize="@dimen/no_recent_emoji_text" />
+        android:textSize="@dimen/no_recent_emoji_text"
+        android:textStyle="italic" />
 
 </FrameLayout>

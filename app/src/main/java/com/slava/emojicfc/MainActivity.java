@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private int lastPage;
+    private Fragment emojiGridPageFragmentHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +144,15 @@ public class MainActivity extends AppCompatActivity {
                 Emoji.addRecentEmoji(code);
                 emojiGridAdapters.get(0).notifyDataSetChanged();
 
+                if (viewPager.getCurrentItem() != 0) {
+
+                    // refresh the fragment content recent emoji
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.detach(emojiGridPageFragmentHolder);
+                    fragmentTransaction.attach(emojiGridPageFragmentHolder);
+                    fragmentTransaction.commit();
+                }
+
                 Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
                 int size = Math.abs(fontMetrics.descent) + Math.abs(fontMetrics.ascent);
 
@@ -225,6 +236,11 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int page) {
             EmojiGridPageFragment emojiGridPageFragment = new EmojiGridPageFragment();
             emojiGridPageFragment.createInstance(page - 1);
+
+            if (page == 0) {
+                emojiGridPageFragmentHolder = emojiGridPageFragment;
+            }
+
             return emojiGridPageFragment;
         }
 
