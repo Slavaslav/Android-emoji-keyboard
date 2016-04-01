@@ -11,7 +11,7 @@ public class Emoji {
 
     public static final HashMap<CharSequence, Integer> hashMap = new HashMap<>();
     public static final SharedPreferences sharedPreferencesEmoji = App.applicationContext.getSharedPreferences("recentEmoji", App.MODE_PRIVATE);
-    private static final ArrayList<String> recentEmoji = new ArrayList<>();
+    public static final ArrayList<String> recentEmoji = new ArrayList<>();
 
     static {
 

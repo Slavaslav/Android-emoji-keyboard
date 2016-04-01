@@ -146,11 +146,15 @@ public class MainActivity extends AppCompatActivity {
 
                 if (viewPager.getCurrentItem() != 0) {
 
-                    // refresh the fragment content recent emoji
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.detach(emojiGridPageFragmentHolder);
-                    fragmentTransaction.attach(emojiGridPageFragmentHolder);
-                    fragmentTransaction.commit();
+                    // refresh fragment only one time when added even one emoji
+                    if (Emoji.recentEmoji.size() < 1) {
+                        // refresh fragment content recent emoji
+
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.detach(emojiGridPageFragmentHolder);
+                        fragmentTransaction.attach(emojiGridPageFragmentHolder);
+                        fragmentTransaction.commit();
+                    }
                 }
 
                 Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();

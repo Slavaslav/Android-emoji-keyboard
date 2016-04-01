@@ -52,7 +52,7 @@ public class EmojiGridPageFragment extends Fragment {
         }
 
         if (page == -1 && Emoji.sharedPreferencesEmoji.getAll().size() == 0) {
-
+            // empty
         } else {
             GridView gridView = (GridView) view.findViewById(R.id.emoji_grid_container);
             new EmojiGridHandler().execute(gridView);
