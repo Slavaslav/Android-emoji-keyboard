@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import com.slava.emojicfc.App;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +42,7 @@ public class Emoji {
                     recentEmojiMap.put(s2[0], Integer.parseInt(s2[1]));
                     recentEmoji.add(s2[0]);
                 }
+                sortEmoji();
             }
         }
     }
@@ -61,6 +64,8 @@ public class Emoji {
             recentEmoji.add(code);
         }
 
+        sortEmoji();
+
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry entry : recentEmojiMap.entrySet()) {
             if (stringBuilder.length() > 0) {
@@ -71,6 +76,25 @@ public class Emoji {
             stringBuilder.append(entry.getValue());
         }
         editor.putString("emojis", stringBuilder.toString()).apply();
+
+    }
+
+    private static void sortEmoji() {
+
+        Collections.sort(recentEmoji, new Comparator<String>() {
+            @Override
+            public int compare(String lhs, String rhs) {
+                Integer count1 = recentEmojiMap.get(lhs);
+                Integer count2 = recentEmojiMap.get(rhs);
+
+                if (count1 > count2) {
+                    return -1;
+                } else if (count1 < count2) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
 
     }
 }
