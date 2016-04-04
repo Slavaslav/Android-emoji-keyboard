@@ -65,6 +65,7 @@ public class Emoji {
         }
 
         sortEmoji();
+        //
 
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry entry : recentEmojiMap.entrySet()) {
