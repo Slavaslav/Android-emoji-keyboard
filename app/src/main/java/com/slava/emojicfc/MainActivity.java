@@ -152,10 +152,11 @@ public class MainActivity extends AppCompatActivity {
                         fragmentTransaction.attach(emojiGridPageFragmentHolder);
                         fragmentTransaction.commit();
                     }
-                }
 
-                Emoji.addRecentEmoji(code);
-                emojiGridAdapters.get(0).notifyDataSetChanged();
+                    Emoji.addRecentEmoji(code);
+                    emojiGridAdapters.get(0).notifyDataSetChanged();
+
+                }
 
                 Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
                 int size = Math.abs(fontMetrics.descent) + Math.abs(fontMetrics.ascent);

@@ -65,7 +65,12 @@ public class Emoji {
         }
 
         sortEmoji();
-        //
+
+        if (recentEmoji.size() > 50) {
+            int i = recentEmoji.size() - 2;
+            recentEmojiMap.remove(recentEmoji.get(i));
+            recentEmoji.remove(i);
+        }
 
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry entry : recentEmojiMap.entrySet()) {
