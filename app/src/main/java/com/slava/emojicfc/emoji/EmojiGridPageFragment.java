@@ -35,7 +35,7 @@ public class EmojiGridPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (page == -1 && Emoji.sharedPreferencesEmoji.getAll().size() == 0) {
+        if (page == -1 && Emoji.recentEmoji.size() == 0) {
             return inflater.inflate(R.layout.emoji_no_recent, container, false);
         } else {
             return inflater.inflate(R.layout.emoji_grid_view, container, false);
@@ -78,7 +78,7 @@ public class EmojiGridPageFragment extends Fragment {
         @Override
         public int getCount() {
             if (emojiPage == -1) {
-                return Emoji.sharedPreferencesEmoji.getAll().size();
+                return Emoji.recentEmoji.size();
             } else {
                 return EmojiData.emojiData[emojiPage].length;
             }
@@ -109,7 +109,7 @@ public class EmojiGridPageFragment extends Fragment {
 
             String code = null;
             if (emojiPage == -1) {
-                viewHolder.imageView.setImageResource(Emoji.hashMap.get(Emoji.getRecentEmoji(position)));
+                viewHolder.imageView.setImageResource(Emoji.hashMap.get(Emoji.recentEmoji.get(position)));
 
 
             } else {
@@ -121,7 +121,7 @@ public class EmojiGridPageFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (emojiPage == -1) {
-                        listener.onClickEmoji(Emoji.getRecentEmoji(position));
+                        listener.onClickEmoji(Emoji.recentEmoji.get(position));
                     } else {
                         listener.onClickEmoji(finalCode);
                     }

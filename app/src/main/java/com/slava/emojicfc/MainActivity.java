@@ -141,13 +141,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClickEmoji(String code) {
 
-                Emoji.addRecentEmoji(code);
-                emojiGridAdapters.get(0).notifyDataSetChanged();
-
                 if (viewPager.getCurrentItem() != 0) {
 
                     // refresh fragment only one time when added even one emoji
-                    if (Emoji.recentEmoji.size() < 1) {
+                    if (Emoji.recentEmoji.size() == 0) {
                         // refresh fragment content recent emoji
 
                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -156,6 +153,9 @@ public class MainActivity extends AppCompatActivity {
                         fragmentTransaction.commit();
                     }
                 }
+
+                Emoji.addRecentEmoji(code);
+                emojiGridAdapters.get(0).notifyDataSetChanged();
 
                 Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
                 int size = Math.abs(fontMetrics.descent) + Math.abs(fontMetrics.ascent);

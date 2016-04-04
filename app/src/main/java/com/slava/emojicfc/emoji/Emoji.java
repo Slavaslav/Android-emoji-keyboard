@@ -6,12 +6,14 @@ import com.slava.emojicfc.App;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Emoji {
 
     public static final HashMap<CharSequence, Integer> hashMap = new HashMap<>();
-    public static final SharedPreferences sharedPreferencesEmoji = App.applicationContext.getSharedPreferences("recentEmoji", App.MODE_PRIVATE);
+    public static final SharedPreferences sharedPreferencesEmoji = App.applicationContext.getSharedPreferences("emoji", App.MODE_PRIVATE);
     public static final ArrayList<String> recentEmoji = new ArrayList<>();
+    private static final HashMap<CharSequence, Integer> recentEmojiMap = new HashMap<>();
 
     static {
 
@@ -28,30 +30,47 @@ public class Emoji {
                 n++;
             }
         }
+
+        if (sharedPreferencesEmoji.contains("emojis")) {
+            String s = sharedPreferencesEmoji.getString("emojis", "");
+            if (s.length() > 0) {
+                String[] s1 = s.split(",");
+                for (String ss : s1) {
+                    String[] s2 = ss.split("=");
+                    recentEmojiMap.put(s2[0], Integer.parseInt(s2[1]));
+                    recentEmoji.add(s2[0]);
+                }
+            }
+        }
     }
 
     public static void addRecentEmoji(String code) {
+
         SharedPreferences.Editor editor = sharedPreferencesEmoji.edit();
 
         int count;
-        if (sharedPreferencesEmoji.contains(code)) {
-            count = sharedPreferencesEmoji.getInt(code, 0);
-            editor.putInt(code, ++count);
+        if (recentEmojiMap.containsKey(code)) {
+            count = recentEmojiMap.get(code);
+            recentEmojiMap.put(code, ++count);
         } else {
             count = 0;
-            editor.putInt(code, count);
+            recentEmojiMap.put(code, count);
         }
-        editor.apply();
-    }
 
-    public static String getRecentEmoji(int position) {
+        if (!recentEmoji.contains(code)) {
+            recentEmoji.add(code);
+        }
 
-        if (recentEmoji.size() != sharedPreferencesEmoji.getAll().size()) {
-            recentEmoji.clear();
-            for (String s : sharedPreferencesEmoji.getAll().keySet()) {
-                recentEmoji.add(s);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Map.Entry entry : recentEmojiMap.entrySet()) {
+            if (stringBuilder.length() > 0) {
+                stringBuilder.append(",");
             }
+            stringBuilder.append(entry.getKey());
+            stringBuilder.append("=");
+            stringBuilder.append(entry.getValue());
         }
-        return recentEmoji.get(position);
+        editor.putString("emojis", stringBuilder.toString()).apply();
+
     }
 }
