@@ -13,7 +13,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
 import android.view.KeyEvent;
@@ -158,14 +157,16 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
+                Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(code));
+
                 Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
                 int size = Math.abs(fontMetrics.descent) + Math.abs(fontMetrics.ascent);
+                EmojiSpan emojiSpan = new EmojiSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM, fontMetrics, size);
 
-                Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(code));
-                drawable.setBounds(0, 0, size, size);
-                SpannableString spannableString = new SpannableString(" ");
-                spannableString.setSpan(new ImageSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                messageEdit.getText().append(spannableString);
+                Spannable s = Spannable.Factory.getInstance().newSpannable(code);
+                s.setSpan(emojiSpan, 0, code.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                messageEdit.getText().append(s);
             }
 
             @Override
@@ -252,6 +253,36 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return EmojiData.emojiData.length + 1; // one page for recent emoji
+        }
+    }
+
+    private class EmojiSpan extends ImageSpan {
+        int size;
+        Paint.FontMetricsInt fontMetrics;
+
+        public EmojiSpan(Drawable d, int verticalAlignment, Paint.FontMetricsInt fontMetrics, int size) {
+            super(d, verticalAlignment);
+            this.size = size;
+            this.fontMetrics = fontMetrics;
+        }
+
+        @Override
+        public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
+
+            if (fm == null) {
+                fm = new Paint.FontMetricsInt();
+            }
+
+            fm.ascent = fontMetrics.ascent;
+            fm.descent = fontMetrics.descent;
+            fm.top = fontMetrics.top;
+            fm.bottom = fontMetrics.bottom;
+
+            if (getDrawable() != null) {
+                getDrawable().setBounds(0, 0, size, size);
+            }
+
+            return size;
         }
     }
 }
