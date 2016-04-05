@@ -158,14 +158,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(code));
-
-                Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
-                int size = Math.abs(fontMetrics.descent) + Math.abs(fontMetrics.ascent);
-                EmojiSpan emojiSpan = new EmojiSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM, fontMetrics, size);
-
+                EmojiSpan emojiSpan = new EmojiSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM);
                 Spannable s = Spannable.Factory.getInstance().newSpannable(code);
                 s.setSpan(emojiSpan, 0, code.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
                 messageEdit.getText().append(s);
             }
 
@@ -257,13 +252,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class EmojiSpan extends ImageSpan {
-        int size;
-        Paint.FontMetricsInt fontMetrics;
 
-        public EmojiSpan(Drawable d, int verticalAlignment, Paint.FontMetricsInt fontMetrics, int size) {
+        public EmojiSpan(Drawable d, int verticalAlignment) {
             super(d, verticalAlignment);
-            this.size = size;
-            this.fontMetrics = fontMetrics;
         }
 
         @Override
@@ -272,6 +263,8 @@ public class MainActivity extends AppCompatActivity {
             if (fm == null) {
                 fm = new Paint.FontMetricsInt();
             }
+            Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
+            int size = Math.abs(fontMetrics.descent) + Math.abs(fontMetrics.ascent);
 
             fm.ascent = fontMetrics.ascent;
             fm.descent = fontMetrics.descent;
