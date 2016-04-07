@@ -19,10 +19,12 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.slava.emojicfc.emoji.Emoji;
 import com.slava.emojicfc.emoji.EmojiData;
@@ -46,6 +48,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final TextView textView = (TextView) findViewById(R.id.emoji_text_view);
+        Button button = (Button) findViewById(R.id.handle_emoji);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String str = messageEdit.getText().toString();
+                Spannable spannable = Spannable.Factory.getInstance().newSpannable(str);
+                Paint.FontMetricsInt fontMetrics = textView.getPaint().getFontMetricsInt();
+
+                for (int i = 0; i < EmojiData.emojiData.length; i++) {
+                    for (int k = 0; k < EmojiData.emojiData[i].length; k++) {
+
+                        String code = EmojiData.emojiData[i][k];
+
+                        if (str.contains(code)) {
+                            int firstIndex = str.indexOf(code);
+                            int lastIndex = firstIndex + code.length();
+                            setSpanEmoji(spannable, code, firstIndex, lastIndex, fontMetrics);
+                            str = str.replaceFirst(code, "  ");
+                            k--;
+                        }
+                    }
+                }
+                textView.setText(spannable);
+            }
+        });
 
         messageEdit = (EditText) findViewById(R.id.message_edit);
         messageEdit.setOnClickListener(new View.OnClickListener() {
@@ -156,12 +186,10 @@ public class MainActivity extends AppCompatActivity {
                     emojiGridAdapters.get(0).notifyDataSetChanged();
 
                 }
-
-                Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(code));
-                EmojiSpan emojiSpan = new EmojiSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM);
-                Spannable s = Spannable.Factory.getInstance().newSpannable(code);
-                s.setSpan(emojiSpan, 0, code.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                messageEdit.getText().append(s);
+                Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
+                Spannable spannable = Spannable.Factory.getInstance().newSpannable(code);
+                setSpanEmoji(spannable, code, 0, code.length(), fontMetrics);
+                messageEdit.getText().append(spannable);
             }
 
             @Override
@@ -227,6 +255,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setSpanEmoji(Spannable spannable, String s, int firstIndex, int lastIndex, Paint.FontMetricsInt fm) {
+
+        Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(s));
+        EmojiSpan emojiSpan = new EmojiSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM, fm);
+        spannable.setSpan(emojiSpan, firstIndex, lastIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+    }
+
     private class EmojiPagerAdapter extends FragmentPagerAdapter {
 
         public EmojiPagerAdapter(FragmentManager fm) {
@@ -252,9 +288,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class EmojiSpan extends ImageSpan {
+        Paint.FontMetricsInt fontMetrics;
 
-        public EmojiSpan(Drawable d, int verticalAlignment) {
+        public EmojiSpan(Drawable d, int verticalAlignment, Paint.FontMetricsInt fm) {
             super(d, verticalAlignment);
+            fontMetrics = fm;
         }
 
         @Override
@@ -263,7 +301,6 @@ public class MainActivity extends AppCompatActivity {
             if (fm == null) {
                 fm = new Paint.FontMetricsInt();
             }
-            Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
             int size = Math.abs(fontMetrics.descent) + Math.abs(fontMetrics.ascent);
 
             fm.ascent = fontMetrics.ascent;
