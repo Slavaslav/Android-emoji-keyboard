@@ -56,23 +56,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String str = messageEdit.getText().toString();
-                Spannable spannable = Spannable.Factory.getInstance().newSpannable(str);
                 Paint.FontMetricsInt fontMetrics = textView.getPaint().getFontMetricsInt();
-
-                for (int i = 0; i < EmojiData.emojiData.length; i++) {
-                    for (int k = 0; k < EmojiData.emojiData[i].length; k++) {
-
-                        String code = EmojiData.emojiData[i][k];
-
-                        if (str.contains(code)) {
-                            int firstIndex = str.indexOf(code);
-                            int lastIndex = firstIndex + code.length();
-                            setSpanEmoji(spannable, code, firstIndex, lastIndex, fontMetrics);
-                            str = str.replaceFirst(code, "  ");
-                            k--;
-                        }
-                    }
-                }
+                Spannable spannable = handleStringEmoji(str, fontMetrics, 1);
                 textView.setText(spannable);
             }
         });
@@ -187,8 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
-                Spannable spannable = Spannable.Factory.getInstance().newSpannable(code);
-                setSpanEmoji(spannable, code, 0, code.length(), fontMetrics);
+                Spannable spannable = handleStringEmoji(code, fontMetrics, 0);
                 messageEdit.getText().append(spannable);
             }
 
@@ -255,12 +239,38 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setSpanEmoji(Spannable spannable, String s, int firstIndex, int lastIndex, Paint.FontMetricsInt fm) {
+    private Spannable handleStringEmoji(String s, Paint.FontMetricsInt fontMetrics, int q) {
+        Spannable spannable = Spannable.Factory.getInstance().newSpannable(s);
 
-        Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(s));
-        EmojiSpan emojiSpan = new EmojiSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM, fm);
-        spannable.setSpan(emojiSpan, firstIndex, lastIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (q == 0) {
+            int firstIndex = s.indexOf(s);
+            int lastIndex = firstIndex + s.length();
 
+            Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(s));
+            EmojiSpan emojiSpan = new EmojiSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM, fontMetrics);
+            spannable.setSpan(emojiSpan, firstIndex, lastIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } else if (q == 1) {
+
+            for (int i = 0; i < EmojiData.emojiData.length; i++) {
+                for (int k = 0; k < EmojiData.emojiData[i].length; k++) {
+
+                    String code = EmojiData.emojiData[i][k];
+
+                    if (s.contains(code)) {
+                        int firstIndex = s.indexOf(code);
+                        int lastIndex = firstIndex + code.length();
+
+                        Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(code));
+                        EmojiSpan emojiSpan = new EmojiSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM, fontMetrics);
+                        spannable.setSpan(emojiSpan, firstIndex, lastIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        s = s.replaceFirst(code, "  ");
+                        k--;
+                    }
+                }
+            }
+        }
+        return spannable;
     }
 
     private class EmojiPagerAdapter extends FragmentPagerAdapter {
