@@ -51,16 +51,20 @@ public class MainActivity extends AppCompatActivity {
 
         final TextView textView = (TextView) findViewById(R.id.emoji_text_view);
         Button button = (Button) findViewById(R.id.handle_emoji);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (button != null) {
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                String str = messageEdit.getText().toString();
-                Paint.FontMetricsInt fontMetrics = textView.getPaint().getFontMetricsInt();
-                Spannable spannable = handleStringEmoji(str, fontMetrics, 1);
-                textView.setText(spannable);
-            }
-        });
+                    String str = messageEdit.getText().toString();
+                    if (textView != null) {
+                        Paint.FontMetricsInt fontMetrics = textView.getPaint().getFontMetricsInt();
+                        Spannable spannable = handleStringEmoji(str, fontMetrics, 1);
+                        textView.setText(spannable);
+                    }
+                }
+            });
+        }
 
         messageEdit = (EditText) findViewById(R.id.message_edit);
         messageEdit.setOnClickListener(new View.OnClickListener() {
@@ -77,12 +81,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         FrameLayout frameEmojiBtn = (FrameLayout) findViewById(R.id.frame_emoji_btn);
-        frameEmojiBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createEmojiView(v);
-            }
-        });
+        if (frameEmojiBtn != null) {
+            frameEmojiBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    createEmojiView(v);
+                }
+            });
+        }
 
         emojiBtn = (ImageView) findViewById(R.id.emoji_btn);
         linearEmojiView = (LinearLayout) findViewById(R.id.linear_emoji_view);
@@ -90,40 +96,45 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tab_layout_emoji);
 
         FrameLayout backSpaceBtn = (FrameLayout) findViewById(R.id.emoji_frame_backspace);
-        backSpaceBtn.setOnTouchListener(new View.OnTouchListener() {
-            private Handler handler;
-            final Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    messageEdit.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
-                    handler.postDelayed(runnable, 50);
-                }
-            };
+        if (backSpaceBtn != null) {
+            backSpaceBtn.setOnTouchListener(new View.OnTouchListener() {
+                private Handler handler;
+                final Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        messageEdit.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+                        handler.postDelayed(runnable, 50);
+                    }
+                };
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    if (messageEdit.getText().length() == 0) {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        if (messageEdit.getText().length() == 0) {
+                            return true;
+                        } else if (handler == null) {
+                            handler = new Handler();
+                        }
+                        messageEdit.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+                        handler.postDelayed(runnable, 500);
                         return true;
-                    } else if (handler == null) {
-                        handler = new Handler();
-                    }
-                    messageEdit.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
-                    handler.postDelayed(runnable, 500);
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (handler == null) {
+                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                        if (handler == null) {
+                            return true;
+                        }
+                        handler.removeCallbacks(runnable);
                         return true;
                     }
-                    handler.removeCallbacks(runnable);
-                    return true;
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
 
         viewPager = (ViewPager) findViewById(R.id.emoji_pager);
-        viewPager.setOffscreenPageLimit(6);
+        if (viewPager != null) {
+            viewPager.setOffscreenPageLimit(6);
+        }
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -247,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
             int lastIndex = firstIndex + s.length();
 
             Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(s));
-            EmojiSpan emojiSpan = new EmojiSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM, fontMetrics);
+            EmojiSpan emojiSpan = new EmojiSpan(drawable, fontMetrics);
             spannable.setSpan(emojiSpan, firstIndex, lastIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         } else if (q == 1) {
 
@@ -261,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
                         int lastIndex = firstIndex + code.length();
 
                         Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(code));
-                        EmojiSpan emojiSpan = new EmojiSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM, fontMetrics);
+                        EmojiSpan emojiSpan = new EmojiSpan(drawable, fontMetrics);
                         spannable.setSpan(emojiSpan, firstIndex, lastIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                         s = s.replaceFirst(code, "  ");
@@ -298,10 +309,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class EmojiSpan extends ImageSpan {
-        Paint.FontMetricsInt fontMetrics;
+        final Paint.FontMetricsInt fontMetrics;
 
-        public EmojiSpan(Drawable d, int verticalAlignment, Paint.FontMetricsInt fm) {
-            super(d, verticalAlignment);
+        public EmojiSpan(Drawable d, Paint.FontMetricsInt fm) {
+            super(d, DynamicDrawableSpan.ALIGN_BOTTOM);
             fontMetrics = fm;
         }
 
