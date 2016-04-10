@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (linearEmojiView.getVisibility() == View.GONE && v.getId() == R.id.frame_emoji_btn) {
             if (viewPager.getAdapter() == null) {
-                viewPager.setAdapter(new EmojiPagerAdapter(getSupportFragmentManager()));
+                viewPager.setAdapter(new EmojiPagerAdapter(getSupportFragmentManager())); // getChildFragmentManager() if fragment inside another fragment
 
                 tabLayout.setupWithViewPager(viewPager);
 
