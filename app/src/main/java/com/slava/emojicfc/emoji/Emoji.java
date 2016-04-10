@@ -1,6 +1,12 @@
 package com.slava.emojicfc.emoji;
 
 import android.content.SharedPreferences;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.text.Spannable;
+import android.text.style.DynamicDrawableSpan;
+import android.text.style.ImageSpan;
 
 import com.slava.emojicfc.App;
 
@@ -102,5 +108,68 @@ public class Emoji {
             }
         });
 
+    }
+
+    public static Spannable handleStringEmoji(String s, Paint.FontMetricsInt fontMetrics, int q) {
+        Spannable spannable = Spannable.Factory.getInstance().newSpannable(s);
+
+        if (q == 0) {
+            int firstIndex = s.indexOf(s);
+            int lastIndex = firstIndex + s.length();
+
+            Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(s));
+            EmojiSpan emojiSpan = new EmojiSpan(drawable, fontMetrics);
+            spannable.setSpan(emojiSpan, firstIndex, lastIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } else if (q == 1) {
+
+            for (int i = 0; i < EmojiData.emojiData.length; i++) {
+                for (int k = 0; k < EmojiData.emojiData[i].length; k++) {
+
+                    String code = EmojiData.emojiData[i][k];
+
+                    if (s.contains(code)) {
+                        int firstIndex = s.indexOf(code);
+                        int lastIndex = firstIndex + code.length();
+
+                        Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(code));
+                        EmojiSpan emojiSpan = new EmojiSpan(drawable, fontMetrics);
+                        spannable.setSpan(emojiSpan, firstIndex, lastIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        s = s.replaceFirst(code, "  ");
+                        k--;
+                    }
+                }
+            }
+        }
+        return spannable;
+    }
+
+    private static class EmojiSpan extends ImageSpan {
+        final Paint.FontMetricsInt fontMetrics;
+
+        public EmojiSpan(Drawable d, Paint.FontMetricsInt fm) {
+            super(d, DynamicDrawableSpan.ALIGN_BOTTOM);
+            fontMetrics = fm;
+        }
+
+        @Override
+        public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
+
+            if (fm == null) {
+                fm = new Paint.FontMetricsInt();
+            }
+            int size = Math.abs(fontMetrics.descent) + Math.abs(fontMetrics.ascent);
+
+            fm.ascent = fontMetrics.ascent;
+            fm.descent = fontMetrics.descent;
+            fm.top = fontMetrics.top;
+            fm.bottom = fontMetrics.bottom;
+
+            if (getDrawable() != null) {
+                getDrawable().setBounds(0, 0, size, size);
+            }
+
+            return size;
+        }
     }
 }

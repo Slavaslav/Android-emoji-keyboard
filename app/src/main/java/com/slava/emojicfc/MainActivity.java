@@ -1,7 +1,6 @@
 package com.slava.emojicfc;
 
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -9,12 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
-import android.text.style.DynamicDrawableSpan;
-import android.text.style.ImageSpan;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -59,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     String str = messageEdit.getText().toString();
                     if (textView != null) {
                         Paint.FontMetricsInt fontMetrics = textView.getPaint().getFontMetricsInt();
-                        Spannable spannable = handleStringEmoji(str, fontMetrics, 1);
+                        Spannable spannable = Emoji.handleStringEmoji(str, fontMetrics, 1);
                         textView.setText(spannable);
                     }
                 }
@@ -183,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 Paint.FontMetricsInt fontMetrics = messageEdit.getPaint().getFontMetricsInt();
-                Spannable spannable = handleStringEmoji(code, fontMetrics, 0);
+                Spannable spannable = Emoji.handleStringEmoji(code, fontMetrics, 0);
                 messageEdit.getText().append(spannable);
             }
 
@@ -250,39 +246,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private Spannable handleStringEmoji(String s, Paint.FontMetricsInt fontMetrics, int q) {
-        Spannable spannable = Spannable.Factory.getInstance().newSpannable(s);
-
-        if (q == 0) {
-            int firstIndex = s.indexOf(s);
-            int lastIndex = firstIndex + s.length();
-
-            Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(s));
-            EmojiSpan emojiSpan = new EmojiSpan(drawable, fontMetrics);
-            spannable.setSpan(emojiSpan, firstIndex, lastIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        } else if (q == 1) {
-
-            for (int i = 0; i < EmojiData.emojiData.length; i++) {
-                for (int k = 0; k < EmojiData.emojiData[i].length; k++) {
-
-                    String code = EmojiData.emojiData[i][k];
-
-                    if (s.contains(code)) {
-                        int firstIndex = s.indexOf(code);
-                        int lastIndex = firstIndex + code.length();
-
-                        Drawable drawable = ContextCompat.getDrawable(App.applicationContext, Emoji.hashMap.get(code));
-                        EmojiSpan emojiSpan = new EmojiSpan(drawable, fontMetrics);
-                        spannable.setSpan(emojiSpan, firstIndex, lastIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                        s = s.replaceFirst(code, "  ");
-                        k--;
-                    }
-                }
-            }
-        }
-        return spannable;
-    }
 
     private class EmojiPagerAdapter extends FragmentPagerAdapter {
 
@@ -308,32 +271,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class EmojiSpan extends ImageSpan {
-        final Paint.FontMetricsInt fontMetrics;
 
-        public EmojiSpan(Drawable d, Paint.FontMetricsInt fm) {
-            super(d, DynamicDrawableSpan.ALIGN_BOTTOM);
-            fontMetrics = fm;
-        }
-
-        @Override
-        public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
-
-            if (fm == null) {
-                fm = new Paint.FontMetricsInt();
-            }
-            int size = Math.abs(fontMetrics.descent) + Math.abs(fontMetrics.ascent);
-
-            fm.ascent = fontMetrics.ascent;
-            fm.descent = fontMetrics.descent;
-            fm.top = fontMetrics.top;
-            fm.bottom = fontMetrics.bottom;
-
-            if (getDrawable() != null) {
-                getDrawable().setBounds(0, 0, size, size);
-            }
-
-            return size;
-        }
-    }
 }
