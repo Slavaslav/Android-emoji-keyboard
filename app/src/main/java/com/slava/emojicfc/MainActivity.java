@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                     tab.select();
                 }
 
-                if (imageViews.get(lastPage).isSelected() && Emoji.sharedPreferencesEmoji.getAll().size() != 0) {
+                if (imageViews.get(lastPage).isSelected() && Emoji.recentEmoji.size() != 0) {
                     imageViews.get(lastPage).setSelected(false);
                 }
                 lastPage = position;
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                if (Emoji.sharedPreferencesEmoji.getAll().size() == 0) {
+                if (Emoji.recentEmoji.size() == 0) {
                     lastPage = 1;
                 } else {
                     lastPage = 0;
@@ -237,6 +237,9 @@ public class MainActivity extends AppCompatActivity {
                 if (tab != null) {
                     tab.select();
                 }
+
+                int keyboardHeight = Emoji.sharedPreferencesEmoji.getInt("keyboard_height", AndroidUtilities.dp(200));
+
             }
 
             AndroidUtilities.hideKeyboard(messageEdit);

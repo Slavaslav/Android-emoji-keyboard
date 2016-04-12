@@ -51,7 +51,7 @@ public class EmojiGridPageFragment extends Fragment {
             listener.createListGridAdapter(emojiGridAdapter);
         }
 
-        if (page == -1 && Emoji.sharedPreferencesEmoji.getAll().size() == 0) {
+        if (page == -1 && Emoji.recentEmoji.size() == 0) {
             // empty
         } else {
             GridView gridView = (GridView) view.findViewById(R.id.emoji_grid_container);
