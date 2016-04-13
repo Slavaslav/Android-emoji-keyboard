@@ -1,6 +1,7 @@
 package com.slava.emojicfc;
 
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -15,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -190,6 +192,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final FrameLayout frameLayoutChat = (FrameLayout) findViewById(R.id.frame_layout_chat);
+        if (frameLayoutChat != null) {
+            frameLayoutChat.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+                @Override
+                public void onGlobalLayout() {
+
+                    Rect r = new Rect();
+                    frameLayoutChat.getWindowVisibleDisplayFrame(r);
+
+                    int screenHeight = frameLayoutChat.getRootView().getHeight();
+                    int keyboardHeight = screenHeight - r.bottom;
+
+                    int previousHeightKeyboard = Emoji.sharedPreferencesEmoji.getInt("keyboard_height", AndroidUtilities.dp(200));
+
+                    if (previousHeightKeyboard != keyboardHeight && keyboardHeight > 150) {
+                        Emoji.sharedPreferencesEmoji.edit().putInt("keyboard_height", keyboardHeight).apply();
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(linearEmojiView.getLayoutParams().width, keyboardHeight);
+                        linearEmojiView.setLayoutParams(layoutParams);
+                    }
+                }
+            });
+        }
+
 
     }
 
@@ -237,9 +263,6 @@ public class MainActivity extends AppCompatActivity {
                 if (tab != null) {
                     tab.select();
                 }
-
-                int keyboardHeight = Emoji.sharedPreferencesEmoji.getInt("keyboard_height", AndroidUtilities.dp(200));
-
             }
 
             AndroidUtilities.hideKeyboard(messageEdit);
