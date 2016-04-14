@@ -38,4 +38,16 @@ class AndroidUtilities {
     public static int dp(float value) {
         return (int) Math.ceil(density * value);
     }
+
+    public static void runOnUIThread(Runnable runnable, long delay) {
+        if (delay == 0) {
+            App.applicationHandler.post(runnable);
+        } else {
+            App.applicationHandler.postDelayed(runnable, delay);
+        }
+    }
+
+    public static void cancelRunOnUIThread(Runnable runnable) {
+        App.applicationHandler.removeCallbacks(runnable);
+    }
 }

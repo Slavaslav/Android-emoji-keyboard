@@ -3,7 +3,6 @@ package com.slava.emojicfc;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -97,12 +96,11 @@ public class MainActivity extends AppCompatActivity {
         FrameLayout backSpaceBtn = (FrameLayout) findViewById(R.id.emoji_frame_backspace);
         if (backSpaceBtn != null) {
             backSpaceBtn.setOnTouchListener(new View.OnTouchListener() {
-                private Handler handler;
-                final Runnable runnable = new Runnable() {
+                final Runnable pressOnBackspace = new Runnable() {
                     @Override
                     public void run() {
                         messageEdit.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
-                        handler.postDelayed(runnable, 50);
+                        AndroidUtilities.runOnUIThread(pressOnBackspace, 50);
                     }
                 };
 
@@ -111,17 +109,12 @@ public class MainActivity extends AppCompatActivity {
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         if (messageEdit.getText().length() == 0) {
                             return true;
-                        } else if (handler == null) {
-                            handler = new Handler();
                         }
                         messageEdit.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
-                        handler.postDelayed(runnable, 500);
+                        AndroidUtilities.runOnUIThread(pressOnBackspace, 500);
                         return true;
                     } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                        if (handler == null) {
-                            return true;
-                        }
-                        handler.removeCallbacks(runnable);
+                        AndroidUtilities.cancelRunOnUIThread(pressOnBackspace);
                         return true;
                     }
                     return false;
