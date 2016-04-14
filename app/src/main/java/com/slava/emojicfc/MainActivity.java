@@ -265,14 +265,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+            linearEmojiView.setLayoutParams(new LinearLayout.LayoutParams(linearEmojiView.getLayoutParams().width, previousHeightKeyboard));
+            linearEmojiView.setVisibility(View.VISIBLE);
             AndroidUtilities.hideKeyboard(messageEdit);
             emojiBtn.setImageResource(R.drawable.ic_emoji7);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(linearEmojiView.getLayoutParams().width, previousHeightKeyboard);
-            linearEmojiView.setLayoutParams(layoutParams);
-            linearEmojiView.setVisibility(View.VISIBLE);
         }
     }
-
 
     private class EmojiPagerAdapter extends FragmentPagerAdapter {
 
