@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private int lastPage;
     private Fragment emojiGridPageFragmentHolder;
+    private int previousHeightKeyboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,12 +206,11 @@ public class MainActivity extends AppCompatActivity {
                     int screenHeight = frameLayoutChat.getRootView().getHeight();
                     int keyboardHeight = screenHeight - r.bottom;
 
-                    int previousHeightKeyboard = Emoji.sharedPreferencesEmoji.getInt("keyboard_height", AndroidUtilities.dp(200));
+                    previousHeightKeyboard = Emoji.sharedPreferencesEmoji.getInt("keyboard_height", AndroidUtilities.dp(200));
 
                     if (previousHeightKeyboard != keyboardHeight && keyboardHeight > 150) {
+                        previousHeightKeyboard = keyboardHeight;
                         Emoji.sharedPreferencesEmoji.edit().putInt("keyboard_height", keyboardHeight).apply();
-                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(linearEmojiView.getLayoutParams().width, keyboardHeight);
-                        linearEmojiView.setLayoutParams(layoutParams);
                     }
                 }
             });
@@ -267,8 +267,9 @@ public class MainActivity extends AppCompatActivity {
 
             AndroidUtilities.hideKeyboard(messageEdit);
             emojiBtn.setImageResource(R.drawable.ic_emoji7);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(linearEmojiView.getLayoutParams().width, previousHeightKeyboard);
+            linearEmojiView.setLayoutParams(layoutParams);
             linearEmojiView.setVisibility(View.VISIBLE);
-
         }
     }
 
