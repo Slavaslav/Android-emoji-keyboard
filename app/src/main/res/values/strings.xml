@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EmojiCFC</string>
+    <string name="app_name">Emoji keyboard</string>
     <string name="enter_message_hint">Write a message…</string>
     <string name="send_message_icon">&#58942;</string>
     <string name="no_recent_emoji">No recent emoji</string>
