@@ -1,6 +1,5 @@
 app/build/
 .idea/
-*.iml
 .gradle/
 local.properties
 build/generated/
